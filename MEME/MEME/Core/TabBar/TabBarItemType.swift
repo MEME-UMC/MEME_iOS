@@ -30,12 +30,33 @@ extension TabBarItemType {
         }
     }
     
+    var unselectedImage: UIImage? {
+        switch self {
+        case .modelHome, .artistHome:
+            return UIImage(named: "Home")
+        case .modelReservation, .artistReservation:
+            return UIImage(named: "Reservation")
+        case .modelMypage, .artistMypage:
+            return UIImage(named: "My")
+        }
+    }
+        
+    var selectedImage: UIImage? {
+        switch self {
+        case .modelHome, .artistHome:
+            return UIImage(named: "selectedHome")
+        case .modelReservation, .artistReservation:
+            return UIImage(named: "selectedReservation")
+        case .modelMypage, .artistMypage:
+            return UIImage(named: "selectedMy")
+        }
+    }
+    
     func setTabBarItem() -> UITabBarItem {
         return UITabBarItem(
             title: title,
-            image: UIImage(systemName: "pencil"), //임시 이미지
-            selectedImage: UIImage(systemName: "pencil")
+            image: unselectedImage?.withRenderingMode(.alwaysOriginal),
+            selectedImage: selectedImage?.withRenderingMode(.alwaysOriginal)
         )
     }
-    
 }

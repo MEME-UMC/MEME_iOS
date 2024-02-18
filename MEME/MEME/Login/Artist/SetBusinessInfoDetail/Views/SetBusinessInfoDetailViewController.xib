@@ -91,7 +91,7 @@
                                     <rect key="frame" x="0.0" y="27" width="288" height="98"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" distribution="fillProportionally" spacing="7" id="iQe-fy-7bC">
-                                            <rect key="frame" x="0.0" y="0.0" width="258.66666666666669" height="25.666666666666668"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="258.66666666666669" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="91h-Sm-Der">
@@ -130,7 +130,7 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" distribution="fillProportionally" spacing="10" id="I4G-zx-ocf">
-                                            <rect key="frame" x="0.0" y="35.666666666666664" width="285" height="25.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="36" width="285" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQE-wK-C8N">
@@ -169,7 +169,7 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" distribution="fillProportionally" spacing="7" id="ysc-Ye-Oru">
-                                            <rect key="frame" x="0.0" y="71.333333333333329" width="227.66666666666666" height="25.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="72" width="227.66666666666666" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGu-W0-aVC">
@@ -207,20 +207,6 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rRq-fH-3iE">
-                                    <rect key="frame" x="0.0" y="178" width="288" height="41"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="41" id="gkY-zw-FZ2"/>
-                                    </constraints>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="제가 다니는 샵에서 진행해요">
-                                        <fontDescription key="titleFontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
-                                    </buttonConfiguration>
-                                    <connections>
-                                        <action selector="makeUpLocationButtonTapped:" destination="-1" eventType="touchUpInside" id="hts-mB-oa5"/>
-                                    </connections>
-                                </button>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMA-QC-tbn">
                                     <rect key="frame" x="0.0" y="223.66666666666669" width="288" height="41"/>
                                     <constraints>
@@ -530,6 +516,20 @@
                                         <constraint firstAttribute="trailing" secondItem="Bpg-V6-Bke" secondAttribute="trailing" id="ku9-gC-e9I"/>
                                     </constraints>
                                 </stackView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rRq-fH-3iE">
+                                    <rect key="frame" x="0.0" y="178" width="288" height="41"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="41" id="gkY-zw-FZ2"/>
+                                    </constraints>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="제가 다니는 샵에서 진행해요">
+                                        <fontDescription key="titleFontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="makeUpLocationButtonTapped:" destination="-1" eventType="touchUpInside" id="hts-mB-oa5"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>

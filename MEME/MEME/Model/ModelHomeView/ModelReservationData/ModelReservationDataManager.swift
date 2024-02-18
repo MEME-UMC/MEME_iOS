@@ -5,19 +5,26 @@
 //  Created by 정민지 on 1/15/24.
 //
 
-import Alamofire
-import UIKit
+import Foundation
+import Moya
 
-// API 명세서 맞게 내용 수정하기
-class ModelReservationDataManager {
+class ShowModelReservationDataManager {
+    static let shared = ShowModelReservationDataManager()
+    let provider = MoyaProvider<ReservationAPI>()
+    
     // MARK: 모델 예약 조회 API
-    func getModelReservation(_ viewController: ModelReservationViewController, _ userID: Int = 2) {
-        AF.request("https://~~~~~~~~~\(userID)", method: .get, parameters: nil).validate().responseDecodable (of: ModelReservationModel.self) {response in
-            switch response.result {
-            case .success(let result):
-                print("성공")
+    func getModelReservation(modelId: Int, completion: @escaping (Result<ReservationDTO, MoyaError>) -> Void) {
+        provider.request(.getModelReservation(modelId: modelId)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let decodedData = try JSONDecoder().decode(ReservationDTO.self, from: response.data)
+                    completion(.success(decodedData))
+                } catch let error {
+                    completion(.failure(MoyaError.underlying(error, response)))
+                }
             case .failure(let error):
-                print(error.localizedDescription)
+                completion(.failure(error))
             }
         }
     }

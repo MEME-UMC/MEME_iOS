@@ -17,6 +17,7 @@ enum MemeDomain {
     case reservation
     case portfolio
     case review
+    case recommend
 }
 
 extension MemeDomain {
@@ -36,6 +37,8 @@ extension MemeDomain {
             return "/portfolio"
         case .review:
             return "/review"
+        case .recommend:
+            return "/recommend"
         }
     }
 }

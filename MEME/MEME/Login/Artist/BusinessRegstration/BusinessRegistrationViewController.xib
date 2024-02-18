@@ -10,11 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Pretendard-Bold.otf">
+            <string>Pretendard-Bold</string>
+        </array>
         <array key="Pretendard-Regular.otf">
             <string>Pretendard-Regular</string>
-        </array>
-        <array key="Pretendard-SemiBold.otf">
-            <string>Pretendard-SemiBold</string>
         </array>
     </customFonts>
     <objects>
@@ -49,13 +49,13 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사업자 등록 번호를 입력해주세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JI-O4-js5">
-                    <rect key="frame" x="23.999999999999986" y="157" width="235.66666666666663" height="21"/>
-                    <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="18"/>
+                    <rect key="frame" x="24" y="217" width="210" height="19.333333333333343"/>
+                    <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="사업자 등록 번호를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ipt-18-QLJ">
-                    <rect key="frame" x="24" y="234" width="345" height="17"/>
+                    <rect key="frame" x="24" y="261.33333333333331" width="345" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="A3v-79-CEK"/>
                     </constraints>
@@ -63,7 +63,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bjc-02-cMo">
-                    <rect key="frame" x="24" y="259" width="345" height="1"/>
+                    <rect key="frame" x="24" y="286.33333333333331" width="345" height="1"/>
                     <color key="backgroundColor" name="Gray500"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="oTG-kk-3I5"/>
@@ -77,7 +77,7 @@
                     </constraints>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="다음">
+                    <buttonConfiguration key="configuration" style="plain" title="인증하기">
                         <fontDescription key="titleFontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="14"/>
                     </buttonConfiguration>
                     <connections>
@@ -85,19 +85,19 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="대표자 성명을 입력해주세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ilM-xM-WeA">
-                    <rect key="frame" x="24" y="299" width="201" height="22"/>
-                    <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="18"/>
+                    <rect key="frame" x="24" y="337.33333333333331" width="178.33333333333334" height="19.333333333333314"/>
+                    <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="개업일자를 입력해주세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVK-Xe-cuA">
-                    <rect key="frame" x="24" y="431" width="181" height="22"/>
-                    <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="18"/>
+                    <rect key="frame" x="24" y="456.66666666666669" width="160.33333333333334" height="19.333333333333314"/>
+                    <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="대표자 성명을 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kHf-XF-nRW">
-                    <rect key="frame" x="24" y="345" width="345" height="17"/>
+                    <rect key="frame" x="24" y="380.66666666666669" width="345" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="bgS-ys-5wI"/>
                     </constraints>
@@ -105,14 +105,14 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XVN-4x-sBv">
-                    <rect key="frame" x="24" y="370" width="345" height="1"/>
+                    <rect key="frame" x="24" y="405.66666666666669" width="345" height="1"/>
                     <color key="backgroundColor" name="Gray500"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="WYL-UU-1p0"/>
                     </constraints>
                 </view>
                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YYYYMMDD" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vi0-yE-44s">
-                    <rect key="frame" x="24" y="477" width="345" height="17"/>
+                    <rect key="frame" x="24" y="500" width="345" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="4uZ-PM-KSf"/>
                     </constraints>
@@ -120,33 +120,31 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CTL-4U-djB">
-                    <rect key="frame" x="27" y="502" width="345" height="1"/>
+                    <rect key="frame" x="27" y="525" width="345" height="1"/>
                     <color key="backgroundColor" name="Gray500"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="2hb-bV-Bsa"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사업자등록증에 표기된 개업연월일 날짜로 입력해주세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kq-Ld-ce6">
-                    <rect key="frame" x="24" y="512" width="264" height="15"/>
+                    <rect key="frame" x="24" y="535" width="264" height="14"/>
                     <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="12"/>
                     <color key="textColor" systemColor="systemRedColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7e9-Zm-eyf">
-                    <rect key="frame" x="155" y="547" width="83" height="35"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="인증하기"/>
-                    <connections>
-                        <action selector="verifyButtonTapped:" destination="-1" eventType="touchUpInside" id="Zx3-Fo-95G"/>
-                    </connections>
-                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사업자 인증이 필요해요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Is-kA-pj6">
+                    <rect key="frame" x="24" y="157" width="169" height="22"/>
+                    <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="HVK-Xe-cuA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="2iU-uU-514"/>
                 <constraint firstItem="CTL-4U-djB" firstAttribute="top" secondItem="Vi0-yE-44s" secondAttribute="bottom" constant="8" id="3qF-1R-Ajz"/>
-                <constraint firstItem="7JI-O4-js5" firstAttribute="top" secondItem="lK7-9K-8eC" secondAttribute="bottom" constant="45" id="4ly-51-46P"/>
+                <constraint firstItem="7JI-O4-js5" firstAttribute="top" secondItem="2Is-kA-pj6" secondAttribute="bottom" constant="38" id="4ly-51-46P"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ipt-18-QLJ" secondAttribute="trailing" constant="24" id="7Eu-1t-FYW"/>
                 <constraint firstItem="9Kq-Ld-ce6" firstAttribute="top" secondItem="CTL-4U-djB" secondAttribute="bottom" constant="9" id="EfE-WW-An2"/>
                 <constraint firstAttribute="trailing" secondItem="XVN-4x-sBv" secondAttribute="trailing" constant="24" id="Eii-FU-vbz"/>
@@ -154,13 +152,14 @@
                 <constraint firstItem="bjc-02-cMo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="Ieu-1h-Tm3"/>
                 <constraint firstItem="uTI-g8-wjt" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="Iix-ad-4qK"/>
                 <constraint firstItem="lK7-9K-8eC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="21" id="OFN-HG-eUh"/>
-                <constraint firstItem="7e9-Zm-eyf" firstAttribute="top" secondItem="9Kq-Ld-ce6" secondAttribute="bottom" constant="20" id="QVP-Eu-xLD"/>
+                <constraint firstItem="2Is-kA-pj6" firstAttribute="top" secondItem="lK7-9K-8eC" secondAttribute="bottom" constant="45" id="S1a-uY-2Mj"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Vi0-yE-44s" secondAttribute="trailing" constant="24" id="UVq-cP-bsX"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="uTI-g8-wjt" secondAttribute="bottom" constant="9" id="W4F-QA-TEd"/>
-                <constraint firstItem="HVK-Xe-cuA" firstAttribute="top" secondItem="XVN-4x-sBv" secondAttribute="bottom" constant="60" id="WrD-xR-kPx"/>
+                <constraint firstItem="HVK-Xe-cuA" firstAttribute="top" secondItem="XVN-4x-sBv" secondAttribute="bottom" constant="50" id="WrD-xR-kPx"/>
                 <constraint firstItem="7JI-O4-js5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="YpF-ZA-oX0"/>
                 <constraint firstItem="XVN-4x-sBv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="24" id="ZVY-ks-pZd"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uTI-g8-wjt" secondAttribute="trailing" constant="24" id="b6H-qJ-k83"/>
+                <constraint firstItem="2Is-kA-pj6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="bA0-wJ-C4m"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lK7-9K-8eC" secondAttribute="trailing" constant="21" id="gye-S5-ikG"/>
                 <constraint firstItem="ipt-18-QLJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="h97-Vd-85H"/>
                 <constraint firstItem="fVJ-ep-xhf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="hYP-iW-jDJ"/>
@@ -169,15 +168,14 @@
                 <constraint firstItem="bjc-02-cMo" firstAttribute="top" secondItem="ipt-18-QLJ" secondAttribute="bottom" constant="8" id="jtI-DV-7EJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bjc-02-cMo" secondAttribute="trailing" constant="24" id="k4h-Zj-FhR"/>
                 <constraint firstItem="XVN-4x-sBv" firstAttribute="bottom" secondItem="ilM-xM-WeA" secondAttribute="bottom" constant="50" id="kvJ-5N-Mxz"/>
-                <constraint firstItem="7e9-Zm-eyf" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mDX-Ib-Ens"/>
-                <constraint firstItem="ilM-xM-WeA" firstAttribute="top" secondItem="bjc-02-cMo" secondAttribute="bottom" constant="39" id="o7k-tn-36y"/>
+                <constraint firstItem="ilM-xM-WeA" firstAttribute="top" secondItem="bjc-02-cMo" secondAttribute="bottom" constant="50" id="o7k-tn-36y"/>
                 <constraint firstItem="Vi0-yE-44s" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="o9c-4L-6rq"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fVJ-ep-xhf" secondAttribute="trailing" id="p9i-oJ-I2H"/>
                 <constraint firstItem="lK7-9K-8eC" firstAttribute="top" secondItem="fVJ-ep-xhf" secondAttribute="bottom" constant="2" id="pEW-sj-O9f"/>
                 <constraint firstItem="fVJ-ep-xhf" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="pVm-XV-xGN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kHf-XF-nRW" secondAttribute="trailing" constant="24" id="qqE-A9-2jV"/>
                 <constraint firstItem="ilM-xM-WeA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="ror-AX-bcE"/>
-                <constraint firstItem="ipt-18-QLJ" firstAttribute="top" secondItem="7JI-O4-js5" secondAttribute="bottom" constant="56" id="sAH-y9-6rW"/>
+                <constraint firstItem="ipt-18-QLJ" firstAttribute="top" secondItem="7JI-O4-js5" secondAttribute="bottom" constant="25" id="sAH-y9-6rW"/>
                 <constraint firstItem="XVN-4x-sBv" firstAttribute="top" secondItem="kHf-XF-nRW" secondAttribute="bottom" constant="8" id="zpo-sz-byF"/>
             </constraints>
             <point key="canvasLocation" x="28" y="21"/>
@@ -194,7 +192,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

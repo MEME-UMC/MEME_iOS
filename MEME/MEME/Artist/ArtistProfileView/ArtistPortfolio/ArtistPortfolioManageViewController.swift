@@ -14,13 +14,18 @@ final class ArtistPortfolioManageViewController: UIViewController {
     
     // 더미데이터
     private var portfolioData : PortfolioData?
-    private var artistId : Int = 3
+    private var artistId : Int = 10
     private var page : Int = 0
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+//        print("viewWillAppear 실행됨")
+        getAllPortfolio()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        getAllPortfolio()
-        collectionViewConfig()
         uiSet()
+        collectionViewConfig()
     }
     
     private func getAllPortfolio() {
@@ -29,7 +34,9 @@ final class ArtistPortfolioManageViewController: UIViewController {
             switch result{
                 case .success(let response):
                     self?.portfolioData = response.data
+//                    print(response.data)
                     self?.portfolioCollectionView.reloadData()
+                    self?.noPortfolioLabel.isHidden = !(self?.portfolioData?.content!.isEmpty)!
                 case .failure(let error):
                     print(error.localizedDescription)
             }
@@ -39,7 +46,6 @@ final class ArtistPortfolioManageViewController: UIViewController {
     private func uiSet(){
         self.tabBarController?.tabBar.isHidden = true
         self.navigationController?.isNavigationBarHidden = true
-        noPortfolioLabel.isHidden = !portfolioMakeupNameArray.isEmpty
     }
     private func collectionViewConfig(){
         portfolioCollectionView.delegate = self
@@ -53,7 +59,7 @@ final class ArtistPortfolioManageViewController: UIViewController {
     }
     @IBAction func portfolioAddButtonDidTap(_ sender: UIButton) {
         portfolioIdx = -1
-        let vc = ArtistPortfolioEditingViewController()
+        let vc = ArtistPortfolioEditingViewController(receivedData: portfolioIdx)
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -81,8 +87,9 @@ extension ArtistPortfolioManageViewController : UICollectionViewDelegate, UIColl
             if let portfolioData = portfolioData {
                 cell.portfolioMainLabel.text = portfolioData.content?[indexPath.row].makeupName
                 cell.portfolioSubLabel.text = portfolioData.content?[indexPath.row].category
-                cell.portfolioPriceLabel.text = String(portfolioData.content![indexPath.row].price)
-                cell.portfolioImageView.image = UIImage(named: portfolioImageArray[indexPath.row]) // 수정 필요
+                cell.portfolioPriceLabel.text = String(portfolioData.content![indexPath.row].price) + "원"
+//                cell.portfolioImageView.image = UIImage(named: 
+//                portfolioImageArray[indexPath.row]) // 수정 필요
             }
             return cell
         }
@@ -90,7 +97,9 @@ extension ArtistPortfolioManageViewController : UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         portfolioIdx = indexPath.row
-        let vc = ArtistPortfolioEditingViewController()
+        let vc = ArtistPortfolioEditingViewController(
+            receivedData: Int((self.portfolioData?.content![portfolioIdx].portfolioId)!)
+        )
         navigationController?.pushViewController(vc, animated: true)
     }
 }

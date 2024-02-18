@@ -24,7 +24,6 @@ final class SetBusinessInfoDetailViewController: UIViewController {
     
     @IBOutlet private weak var textField: UITextField!
     
-    
     @IBOutlet var timeViews: [UIView]!
     
     @IBOutlet private var weekButtons: [UIButton]!
@@ -39,8 +38,13 @@ final class SetBusinessInfoDetailViewController: UIViewController {
     private var snapShot: SnapShot?
     
     private var selectedFields: Set<Int> = []
-    private var makeUpLocation: Set<Int> = []
+    private var selectedWeekDay: Set<Int> = []
+    private var startTime: String?
+    private var endTime: String?
     private var isStart = true
+    private var builder: ArtistProfileInfoBuilder?
+    private var selectedLocation: MakeUpLocation?
+    private var selectedExperience: WorkExperience?
     
     private let amTimes: [String] = [
         "04:00", "04:30",
@@ -111,6 +115,24 @@ final class SetBusinessInfoDetailViewController: UIViewController {
         completeButton.layer.cornerRadius = 10
     }
     
+    func configure(builder: ArtistProfileInfoBuilder) {
+        self.builder = builder
+    }
+    
+    private func setNextButton() {
+        guard
+            !selectedFields.isEmpty,
+            selectedLocation != nil,
+            !selectedWeekDay.isEmpty,
+            startTime != nil,
+            endTime != nil
+        else {
+            completeButton.isEnabled = false
+            return
+        }
+        
+        completeButton.isEnabled = true
+    }
     
     @IBAction func fieldButtonTapped(_ sender: UIButton) {
         let tag = sender.tag
@@ -129,27 +151,43 @@ final class SetBusinessInfoDetailViewController: UIViewController {
     @IBAction func makeUpLocationButtonTapped(_ sender: UIButton) {
         let tag = sender.tag
         
-        if makeUpLocation.contains(tag) {
-            makeUpLocation.remove(tag)
-            sender.layer.borderColor = UIColor.gray200.cgColor
-            locationCheckImages[tag].image = nil
+        locationButtons.forEach { button in
+            if button.tag == tag {
+                button.layer.borderColor = UIColor.mainBold.cgColor
+                locationCheckImages[button.tag].image = .icCheck
+                
+            } else {
+                button.layer.borderColor = UIColor.gray300.cgColor
+                locationCheckImages[button.tag].image = nil
+            }
+        }
+        
+        switch sender.tag {
+        case 0:
+            selectedLocation = .SHOP
+        case 1:
+            selectedLocation = .VISIT
+        default:
+            selectedLocation = .BOTH
+        }
+        
+        if selectedLocation == .VISIT {
+            textField.text = nil
+            textField.isEnabled = false
         } else {
-            makeUpLocation.insert(tag)
-            sender.layer.borderColor = UIColor.mainBold.cgColor
-            locationCheckImages[tag].image = .icCheck
+            textField.isEnabled = true
         }
     }
     
-    
     @IBAction func weekButtonTapped(_ sender: UIButton) {
-        weekButtons.forEach {
-            if sender.tag == $0.tag {
-                $0.tintColor = .white
-                $0.backgroundColor = .mainBold
-            } else {
-                $0.tintColor = .black
-                $0.backgroundColor = .white
-            }
+        if selectedWeekDay.contains(sender.tag) {
+            selectedWeekDay.remove(sender.tag)
+            weekButtons[sender.tag].tintColor = .black
+            weekButtons[sender.tag].backgroundColor = .white
+        } else {
+            selectedWeekDay.insert(sender.tag)
+            weekButtons[sender.tag].tintColor = .white
+            weekButtons[sender.tag].backgroundColor = .mainBold
         }
     }
     
@@ -167,10 +205,42 @@ final class SetBusinessInfoDetailViewController: UIViewController {
     }
 
     @IBAction private func completionButtonTapped(_ sender: Any) {
+        guard 
+            var builder = builder,
+            let selectedLocation = selectedLocation,
+            let startTime = startTime,
+            let endTime = endTime
+        else { return }
+        
+        var specialization: [String] = []
+        MakeUpCategory.allCases.forEach { category in
+            if selectedFields.contains(category.intVal) {
+                specialization.append(category.rawValue)
+            }
+        }
+        
+        var weekDays: [String] = []
+        DayOfWeek.allCases.forEach { day in
+            if selectedWeekDay.contains(day.intVal) {
+                weekDays.append(day.rawValue)
+            }
+        }
+        
+        builder = builder.specialization(specialization)
+        builder = builder.makeupLocation(selectedLocation.rawValue)
+        builder = builder.week(weekDays)
+        builder = builder.startTime(startTime)
+        builder = builder.endTime(startTime)
+        if
+            selectedLocation != .VISIT,
+            let text = textField.text
+        {
+            builder = builder.shopLocation(text)
+        }
+        
         let nextVC = ArtistTabBarController()
         navigationController?.pushViewController(nextVC, animated: true)
     }
-    
 }
 
 // MARK: - collectionView 설정
@@ -275,8 +345,10 @@ extension SetBusinessInfoDetailViewController: UICollectionViewDelegate {
         cell.contentView.layer.borderColor = UIColor.mainBold.cgColor
         
         if isStart {
+            startTime = cell.getTime()
             startTimeLabel.text = cell.getTime()
         } else {
+            endTime = cell.getTime()
             endTimeLabel.text = cell.getTime()
         }
         

@@ -57,7 +57,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="차차 아티스트" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fLu-fW-lbW">
-                        <rect key="frame" x="137" y="38" width="55" height="12"/>
+                        <rect key="frame" x="137" y="38" width="204" height="12"/>
                         <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="10"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -88,7 +88,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메이크업명" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5H-wc-AbB">
-                        <rect key="frame" x="137" y="78" width="60.666666666666657" height="17"/>
+                        <rect key="frame" x="137" y="78" width="184" height="17"/>
                         <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="14"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -177,6 +177,7 @@
                     <constraint firstItem="fLu-fW-lbW" firstAttribute="leading" secondItem="sL9-KN-bby" secondAttribute="trailing" constant="13" id="Vm2-YS-veu"/>
                     <constraint firstItem="w9b-Vb-yPu" firstAttribute="centerY" secondItem="bom-7o-IeO" secondAttribute="centerY" id="YbU-sj-K6r"/>
                     <constraint firstItem="pEN-IO-7KX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="bbW-76-tY5"/>
+                    <constraint firstAttribute="trailing" secondItem="fLu-fW-lbW" secondAttribute="trailing" constant="14" id="bbk-wx-R3p"/>
                     <constraint firstItem="KJt-44-VHY" firstAttribute="centerY" secondItem="bom-7o-IeO" secondAttribute="centerY" id="bq4-RT-7CN"/>
                     <constraint firstItem="w9b-Vb-yPu" firstAttribute="leading" secondItem="KJt-44-VHY" secondAttribute="trailing" constant="3" id="c7b-LF-FMf"/>
                     <constraint firstItem="RAY-no-ohI" firstAttribute="centerY" secondItem="QCx-73-91m" secondAttribute="centerY" id="eHX-3k-PhN"/>
@@ -187,6 +188,7 @@
                     <constraint firstAttribute="bottom" secondItem="bom-7o-IeO" secondAttribute="bottom" constant="13" id="uGf-Vy-Ur0"/>
                     <constraint firstItem="y5H-wc-AbB" firstAttribute="leading" secondItem="sL9-KN-bby" secondAttribute="trailing" constant="13" id="uwf-qh-cWU"/>
                     <constraint firstItem="RAY-no-ohI" firstAttribute="height" secondItem="QCx-73-91m" secondAttribute="height" id="vhH-QU-ct3"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="y5H-wc-AbB" secondAttribute="trailing" constant="14" id="zJx-F4-NuH"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

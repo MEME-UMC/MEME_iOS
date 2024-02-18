@@ -22,6 +22,7 @@ final class ModelTabBarController: UITabBarController {
     private func setTabBarItems() {
         tabs = [
             TabBarItemType.modelHome: UINavigationController(rootViewController: ModelHomeViewController()),
+            TabBarItemType.modelReservation: UINavigationController(rootViewController: ModelReservationChartViewController()),
             TabBarItemType.modelMypage: UINavigationController(rootViewController: ModelMyPageViewController())
         ]
 //        private func setTabBarItems() {
@@ -47,5 +48,8 @@ final class ModelTabBarController: UITabBarController {
     
     private func setUI() {
         tabBar.backgroundColor = .white
+        tabBar.tintColor = .mainBold
+        tabBar.shadowImage = UIImage()
+        tabBar.backgroundImage = UIImage()
     }
 }

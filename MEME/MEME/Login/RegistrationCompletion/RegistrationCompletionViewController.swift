@@ -9,13 +9,13 @@ import UIKit
 
 final class RegistrationCompletionViewController: UIViewController {
 
-    @IBOutlet private weak var navigationBar: NavigationBarView!
+    
     @IBOutlet private weak var completionButton: UIButton!
     private var isArtist = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        setUI()
     }
     
     func configure(isArtist: Bool) {
@@ -29,7 +29,6 @@ final class RegistrationCompletionViewController: UIViewController {
     }
     
     private func setUI() {
-        navigationBar.configure(title: "회원가입")
         completionButton.layer.cornerRadius = 10
     }
 

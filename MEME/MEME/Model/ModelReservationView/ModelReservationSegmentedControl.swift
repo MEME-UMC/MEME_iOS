@@ -67,6 +67,9 @@ final class ModelReservationSegmentedControl: UISegmentedControl {
             self.underbar.transform = .init(translationX: underBarLeadingSpacing, y: 0)
         })
     }
+    func setReviewCount(_ count: Int) {
+        reviewNumLabel.text = "\(count)"
+    }
 }
 
 

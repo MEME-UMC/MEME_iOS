@@ -7,6 +7,7 @@ class ModelViewArtistProfileViewController: UIViewController {
     private let expertiseFields = ["데일리 메이크업", "배우 메이크업","면접 메이크업","데일리 메이크업", "배우 메이크업","면접 메이크업"]
     private let isModel : Bool = true
     private var isFavoriteArtist : Bool = true
+    var artistID: Int? = 0
     
     // MARK: - Properties
     private let scrollView = UIScrollView()
@@ -384,9 +385,17 @@ class ModelViewArtistProfileViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     @objc private func addFavoriteArtistTapped() {
-        //api 요청 추가
-        isFavoriteArtist = !isFavoriteArtist
-        updateButtonStatus()
+        if isFavoriteArtist {
+            if let artistID = artistID {
+                deleteFavoriteArtist(modelId: 6, artistId: artistID)
+                updateButtonStatus()
+            }
+        } else {
+            if let artistID = artistID {
+                postFavoriteArtist(modelId: 6, artistId: artistID)
+                updateButtonStatus()
+            }
+        }
     }
     
     //MARK: -Helpers
@@ -512,5 +521,40 @@ extension ModelViewArtistProfileViewController: BackButtonTappedDelegate {
         if let navigationController = self.navigationController {
             navigationController.popViewController(animated: true)
         }
+    }
+}
+
+extension ModelViewArtistProfileViewController {
+    func postFavoriteArtist(modelId: Int, artistId: Int) {
+        MyPageManager.shared.postFavoriteArtist(modelId: modelId, artistId: artistId) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self!.isFavoriteArtist = true
+                print("관심 아티스트 추가 성공: \(response.message)")
+            case .failure(let error):
+                self!.isFavoriteArtist = false
+                if let responseData = error.response {
+                    let responseString = String(data: responseData.data, encoding: .utf8)
+                    print("관심 아티스트 추가 실패: \(responseString ?? "no data")")
+                }
+            }
+        }
+        
+    }
+    func deleteFavoriteArtist(modelId: Int, artistId: Int) {
+        MyPageManager.shared.deleteFavoriteArtist(modelId: modelId, artistId: artistId) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self!.isFavoriteArtist = false
+                print("관심 아티스트 삭제 성공: \(response.message)")
+            case .failure(let error):
+                self!.isFavoriteArtist = true
+                if let responseData = error.response {
+                    let responseString = String(data: responseData.data, encoding: .utf8)
+                    print("관심 아티스트 삭제 실패: \(responseString ?? "no data")")
+                }
+            }
+        }
+        
     }
 }

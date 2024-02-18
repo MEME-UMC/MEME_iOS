@@ -11,14 +11,7 @@ import Moya
 enum ReservationAPI {
     case getPossibleLocation(aristId: Int)
     case getPossibleTime(aristId: Int)
-    case postReservation(
-        modelId: Int,
-        portfolioId: Int,
-        date: String,
-        time: ReservationTimes,
-        dayOfWeek: DayOfWeek,
-        location: String
-    )
+    case postReservation(parameters: [String: Any])
     case patchReservation(reservationId: Int, status: ReservationState)
     case getArtistReservation(aristId: Int)
     case getModelReservation(modelId: Int)
@@ -53,7 +46,7 @@ extension ReservationAPI: MemeAPI {
     var headerType: HTTPHeaderFields {
         switch self {
         case .getArtistReservation, .getModelReservation, .getPossibleLocation, .getPossibleTime, .patchReservation, .postReservation:
-            return .plain
+            return .hasAccessToken
         }
     }
     
@@ -78,24 +71,7 @@ extension ReservationAPI: MemeAPI {
                 "status": state.rawValue
             ]
             return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
-        case .postReservation(
-            modelId: let modelId,
-            portfolioId: let portfolioId,
-            date: let date,
-            time: let time,
-            dayOfWeek: let dayOfWeek,
-            location: let location
-        ):
-            let reservationDayOfWeekAndTime: [String: Any] = [
-                dayOfWeek.rawValue: time.rawValue,
-            ]
-            let parameters: [String: Any] = [
-                "model_id" : modelId,
-                "portfolio_id" : portfolioId,
-                "reservation_date" : date,
-                "reservationDayOfWeekAndTime": reservationDayOfWeekAndTime,
-                "location" : location
-            ]
+        case .postReservation(let parameters):
             return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
         }
     }

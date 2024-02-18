@@ -7,14 +7,17 @@
 
 import UIKit
 import SnapKit
-// 예시 데이터 구조 -> 이후 삭제 필요
+
 class ModelReservationViewController: UIViewController {
-    // 예시 API 호출 이미지  -> 이후 삭제 필요
-    let imageUrlsFromAPI: [String] = ["https://images.unsplash.com/photo-1620613908146-bb9a8bbb7eca?q=80&w=1854&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://images.unsplash.com/photo-1594465919760-441fe5908ab0?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "https://images.unsplash.com/photo-1629297777138-6ae859d4d6df?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    ]
-    
     // MARK: - Properties
+    var portfolioID: Int? = 0
+    var artistID: Int? = 3
+    var makeupName: String?
+    var artistName: String?
+    
+    private var portfolioImageUrls: [String] = []
+    private var isFavorite: Bool = false
+    
     private let navigationBar = NavigationBarView()
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -24,7 +27,6 @@ class ModelReservationViewController: UIViewController {
     }()
     private let contentsView = UIView()
     
-    //backgroundImage 스크롤
     private lazy var backgroundImageScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
@@ -70,13 +72,6 @@ class ModelReservationViewController: UIViewController {
         imageView.image = UIImage(named: "icon_like")
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = true
-        
-        return imageView
-    }()
-    private var shareImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "icon_share")
-        imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()
@@ -207,6 +202,7 @@ class ModelReservationViewController: UIViewController {
         navigationBar.delegate = self
         navigationBar.configure(title: "예약하기")
         
+        fetchPortfolioDetail(userId: 6, portfolioId: portfolioID!)
         fetchImagesFromAPI()
         setupSegmentedControl()
 
@@ -229,7 +225,6 @@ class ModelReservationViewController: UIViewController {
         contentsView.addSubview(profileImageView)
         contentsView.addSubview(artistNameLabel)
         contentsView.addSubview(likeImageView)
-        contentsView.addSubview(shareImageView)
         contentsView.addSubview(makeupNameLabel)
         contentsView.addSubview(makeupExplainLabel)
         contentsView.addSubview(makeupPriceLabel)
@@ -284,30 +279,27 @@ class ModelReservationViewController: UIViewController {
         artistNameLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(profileImageView.snp.centerY)
             make.leading.equalTo( profileImageView.snp.trailing).offset(16)
-        }
-        shareImageView.snp.makeConstraints { (make) in
-            make.centerY.equalTo(profileImageView.snp.centerY)
-            make.trailing.equalTo( contentsView.snp.trailing).offset(-39)
-            make.width.equalTo(24)
-            make.height.equalTo(24)
+            make.width.equalTo(200)
         }
         likeImageView.snp.makeConstraints { (make) in
             make.centerY.equalTo(profileImageView.snp.centerY)
-            make.trailing.equalTo( shareImageView.snp.leading).offset(-16)
+            make.trailing.equalTo( contentsView.snp.trailing).offset(-39)
             make.width.equalTo(24)
             make.height.equalTo(24)
         }
         makeupNameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(profileImageView.snp.bottom).offset(24)
             make.leading.equalTo(contentsView.snp.leading).offset(45)
+            make.width.equalTo(200)
         }
         makeupExplainLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(makeupNameLabel.snp.centerY)
-            make.leading.equalTo(makeupNameLabel.snp.trailing).offset(22)
+            make.trailing.equalTo(contentsView.snp.trailing).offset(-39)
         }
         makeupPriceLabel.snp.makeConstraints { (make) in
             make.top.equalTo(makeupNameLabel.snp.bottom).offset(11)
             make.leading.equalTo(contentsView.snp.leading).offset(45)
+            make.trailing.equalTo(contentsView.snp.trailing).offset(-45)
         }
         topLineView.snp.makeConstraints { (make) in
             make.top.equalTo(makeupPriceLabel.snp.bottom).offset(23)
@@ -376,25 +368,42 @@ class ModelReservationViewController: UIViewController {
     }
     @objc private func reservationTapped() {
         let reservationsVC = ModelReservationDetailViewController()
+        reservationsVC.artistID = artistID
+        reservationsVC.portfolioID = portfolioID
+        reservationsVC.makeupName = makeupName
+        reservationsVC.artistName = artistName
         navigationController?.pushViewController(reservationsVC, animated: true)
     }
     @objc private func profileImageTapped() {
         let artistProfileVC = ModelViewArtistProfileViewController()
+        artistProfileVC.artistID = artistID
         navigationController?.pushViewController(artistProfileVC, animated: true)
     }
-    @objc private func likeImageTapped() {
-        if likeImageView.image == UIImage(named: "icon_like") {
+    private func likeImageDecision() {
+        print(isFavorite)
+        if isFavorite {
             likeImageView.image = UIImage(named: "icon_fillLike")
         } else {
             likeImageView.image = UIImage(named: "icon_like")
         }
     }
+    @objc private func likeImageTapped() {
+        if isFavorite {
+            if let portfolioID = portfolioID {
+                deleteFavoritePortfolio(modelId: 6, portfolioId: portfolioID)
+            }
+        } else {
+            if let portfolioID = portfolioID {
+                postFavoritePortfolio(modelId: 6, portfolioId: portfolioID)
+            }
+        }
+    }
     // MARK: - API Actions
     private func fetchImagesFromAPI() {
-        if imageUrlsFromAPI.isEmpty {
+        if portfolioImageUrls.isEmpty {
             addImageView(image: defaultImage!, index: 0)
         } else {
-            for (index, urlString) in imageUrlsFromAPI.enumerated() {
+            for (index, urlString) in portfolioImageUrls.enumerated() {
                 guard let url = URL(string: urlString) else { continue }
                 URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
                     if let data = data, error == nil, let image = UIImage(data: data) {
@@ -421,9 +430,9 @@ class ModelReservationViewController: UIViewController {
         }
         
         if index == 0 {
-            backgroundImageScrollView.contentSize = CGSize(width: contentsView.frame.width * CGFloat(imageUrlsFromAPI.count), height: contentsView.frame.width)
-            pageControl.numberOfPages = imageUrlsFromAPI.count
-            pageControl.isHidden = imageUrlsFromAPI.count <= 1
+            backgroundImageScrollView.contentSize = CGSize(width: contentsView.frame.width * CGFloat(portfolioImageUrls.count), height: contentsView.frame.width)
+            pageControl.numberOfPages = portfolioImageUrls.count
+            pageControl.isHidden = portfolioImageUrls.count <= 1
         }
     }
     @objc private func didChangeValue(segment: UISegmentedControl) {
@@ -544,5 +553,201 @@ extension UIScrollView {
         set {
             objc_setAssociatedObject(self, &AssociatedKeys.lastOffsetY, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
+    }
+}
+
+//MARK: -API 통신 메소드
+extension ModelReservationViewController {
+    func postFavoritePortfolio(modelId: Int, portfolioId: Int) {
+        MyPageManager.shared.postFavoritePortfolio(modelId: modelId, portfolioId: portfolioId) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self!.likeImageView.image = UIImage(named: "icon_fillLike")
+                self!.isFavorite = true
+                print("관심 메이크업 추가 성공: \(response.message)")
+            case .failure(let error):
+                self!.likeImageView.image = UIImage(named: "icon_like")
+                self!.isFavorite = false
+                if let responseData = error.response {
+                    let responseString = String(data: responseData.data, encoding: .utf8)
+                    print("관심 메이크업 추가 실패: \(responseString ?? "no data")")
+                }
+            }
+        }
+
+    }
+    func deleteFavoritePortfolio(modelId: Int, portfolioId: Int) {
+        MyPageManager.shared.deleteFavoritePortfolio(modelId: modelId, portfolioId: portfolioId) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self!.likeImageView.image = UIImage(named: "icon_like")
+                self!.isFavorite = false
+                print("관심 메이크업 삭제 성공: \(response.message)")
+            case .failure(let error):
+                self!.likeImageView.image = UIImage(named: "icon_fillLike")
+                self!.isFavorite = true
+                if let responseData = error.response {
+                    let responseString = String(data: responseData.data, encoding: .utf8)
+                    print("관심 메이크업 삭제 실패: \(responseString ?? "no data")")
+                }
+            }
+        }
+        
+    }
+    private func fetchPortfolioDetail(userId: Int, portfolioId: Int) {
+        PortfolioManager.shared.getPortfolioDetail(userId: userId, portfolioId: portfolioId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let portfolioDetail):
+                    if let jsonData = try? JSONEncoder().encode(portfolioDetail),
+                       let jsonString = String(data: jsonData, encoding: .utf8) {
+                        print("포트폴리오 세부 조회 완료: \(jsonString)")
+                        self?.displayPortfolioDetail(portfolioDetail)
+                    } else {
+                        print("데이터 format 실패")
+                    }
+                    
+                case .failure(let error):
+                    if let responseData = error.response {
+                        let responseString = String(data: responseData.data, encoding: .utf8)
+                        print("포트폴리오 세부 조회 실패: \(responseString ?? "no data")")
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Enum 처리
+    enum MakeupCategory: String {
+        case DAILY
+        case ACTOR
+        case INTERVIEW
+        case PARTY
+        case WEDDING
+        case PROSTHETIC
+        case STUDIO
+        case ETC
+    }
+    enum CategoryToMakeupExplain: String {
+        case DAILY
+        case ACTOR
+        case INTERVIEW
+        case PARTY
+        case WEDDING
+        case PROSTHETIC
+        case STUDIO
+        case ETC
+    }
+    enum EmploymentStatus: String {
+        case SHOP
+        case VISIT
+        case BOTH
+    }
+    
+    private func displayPortfolioDetail(_ portfolioDetail: PortfolioDTO) {
+        if let imageDTOs = portfolioDetail.data?.portfolioImgDtoList {
+            for imageDTO in imageDTOs {
+                portfolioImageUrls.append(imageDTO.portfolioImgSrc)
+            }
+        }
+        if let profileImgURLString = portfolioDetail.data?.artistProfileImg,
+           let profileImgURL = URL(string: profileImgURLString) {
+            downloadImage(from: profileImgURL) { [weak self] image in
+                DispatchQueue.main.async {
+                    self?.profileImageView.image = image
+                }
+            }
+        } else {
+            profileImageView.image = UIImage(named: "modelProfile")
+        }
+        
+        artistName = portfolioDetail.data?.artistNickName
+        artistNameLabel.text = portfolioDetail.data?.artistNickName
+        makeupName = portfolioDetail.data?.makeupName
+        makeupNameLabel.text = portfolioDetail.data?.makeupName
+        
+        if let categoryToMakeupExplainString = portfolioDetail.data?.makeupLocation,
+           let categoryToMakeupExplain = CategoryToMakeupExplain(rawValue: categoryToMakeupExplainString) {
+            switch categoryToMakeupExplain {
+            case .DAILY:
+                makeupExplainLabel.text = "데일리 메이크업으로 좋아요"
+            case .ACTOR:
+                makeupExplainLabel.text = "배우/촬영하실 때 좋아요"
+            case .INTERVIEW:
+                makeupExplainLabel.text = "면접가실 때 좋아요"
+            case .PARTY:
+                makeupExplainLabel.text = "파티 참여할 때 좋아요"
+            case .WEDDING:
+                makeupExplainLabel.text = "결혼식/웨딩 촬영에 좋아요"
+            case .PROSTHETIC:
+                makeupExplainLabel.text = "특수 분장하실 때 좋아요"
+            case .STUDIO:
+                makeupExplainLabel.text = "스튜디오 찰영가실 때 좋아요"
+            case .ETC:
+                makeupExplainLabel.text = "기타 메이크업에 좋아요"
+            }
+        } else {
+            makeupExplainLabel.text = "메이크업 설명 없음"
+        }
+        if let isFavorite = portfolioDetail.data?.isFavorite {
+            self.isFavorite = isFavorite
+        }
+        likeImageDecision()
+        if let employmentStatusString = portfolioDetail.data?.makeupLocation,
+           let employmentStatus = EmploymentStatus(rawValue: employmentStatusString) {
+            switch employmentStatus {
+            case .SHOP:
+                aEmploymentStatusLabel.text = "🙋🏻샵에 재직 중이에요"
+            case .VISIT:
+                aEmploymentStatusLabel.text = "🙅🏻프리랜서에요"
+            case .BOTH:
+                aEmploymentStatusLabel.text = "🙆🏻샵, 방문 다 가능해요"
+            }
+        } else {
+            aEmploymentStatusLabel.text = "직업 상태 없음"
+        }
+        
+        if let categoryString = portfolioDetail.data?.category,
+           let category = MakeupCategory(rawValue: categoryString) {
+            switch category {
+            case .DAILY:
+                aCategoryLabel.text = "데일리 메이크업"
+            case .ACTOR:
+                aCategoryLabel.text = "배우 메이크업"
+            case .INTERVIEW:
+                aCategoryLabel.text = "면접 메이크업"
+            case .PARTY:
+                aCategoryLabel.text = "파티/이벤트 메이크업"
+            case .WEDDING:
+                aCategoryLabel.text = "웨딩 메이크업"
+            case .PROSTHETIC:
+                aCategoryLabel.text = "특수 메이크업"
+            case .STUDIO:
+                aCategoryLabel.text = "스튜디오 메이크업"
+            case .ETC:
+                aCategoryLabel.text = "기타 메이크업"
+            }
+        } else {
+            aCategoryLabel.text = "카테고리 없음"
+        }
+        
+        
+        if let info = portfolioDetail.data?.info {
+            informationView.configure(infoText: info)
+        }
+        if let reviewCount = portfolioDetail.data?.reviewCount {
+            segmentedControl.setReviewCount(reviewCount)
+        }
+        //아티스트 아이디 추가 필요
+    }
+        
+    private func downloadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, let image = UIImage(data: data) else {
+                completion(nil)
+                return
+            }
+            completion(image)
+        }.resume()
     }
 }

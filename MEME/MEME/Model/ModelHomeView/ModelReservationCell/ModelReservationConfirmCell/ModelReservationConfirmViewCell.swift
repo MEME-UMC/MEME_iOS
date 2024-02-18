@@ -29,4 +29,23 @@ class ModelReservationConfirmViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
     }
+    
+    func configure(with data: ReservationData) {
+        let isoFormatter = ISO8601DateFormatter()
+            isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+            if let date = isoFormatter.date(from: data.reservationDate) {
+                let timeFormatter = DateFormatter()
+                timeFormatter.dateFormat = "HH:mm"
+                modelReservationDateLabel.text = timeFormatter.string(from: date)
+            } else {
+                modelReservationDateLabel.text = "날짜 오류"
+            }
+        
+        modelReservationMakeupNameLabel.text = data.makeupName
+        modelReservationArtistNameLabel.text = data.artistNickName
+        modelReservationLocationLabel.text = data.shopLocation
+        modelReservationPriceLabel.text = "\(data.price)원"
+    }
+    
 }

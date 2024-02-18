@@ -32,4 +32,10 @@ class ModelManagementReservationsDateCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
     }
+    func configure(with date: Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy. MM. dd EEE"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        label.text = dateFormatter.string(from: date)
+    }
 }

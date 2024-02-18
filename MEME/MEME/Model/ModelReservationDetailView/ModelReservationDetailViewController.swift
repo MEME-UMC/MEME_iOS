@@ -9,17 +9,27 @@ import UIKit
 import SnapKit
 import FSCalendar
 
-class ModelReservationDetailViewController: UIViewController {
-    // 예시 데이터 -> 추후 API 호출해서 데이터 받아오는 것으로 수정 필요
-    private let availableTimes = ["10:30", "11:00","12:00", "12:30","13:00", "13:30","14:00", "14:30","15:00", "15:30","16:00", "16:30","17:00", "17:30","18:00", "18:30","19:00", "19:30", "20:00"]
+class ModelReservationDetailViewController: UIViewController, ModelReservationBothLocationViewDelegate {
+    var portfolioID: Int? = 0
+    var artistID: Int? = 0
+    var makeupName: String?
+    var artistName: String?
+    var locationText: String?
+    
     // MARK: - Properties
+    var selectedMakeupName: String?
+    var selectedLocation: String?
+    
+    var possibleTimeSlots: [TimeSlot] = []
     private var selectedDate: Date?
     private var selectedTime: String?
+    private var selectedWeek: String?
+    private var selectedLocationType: String?
+    private var selectedVisitLocation: String?
     
     private let navigationBar = NavigationBarView()
     private let scrollView = UIScrollView()
     private let contentsView = UIView()
-    
     private let selectLocationStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -29,7 +39,7 @@ class ModelReservationDetailViewController: UIViewController {
         
         return stack
     }()
-
+    
     private var shopView: ModelReservationShopLocationView!
     private var visitView: ModelReservationVisitLocationView!
     private var bothView: ModelReservationBothLocationView!
@@ -170,6 +180,7 @@ class ModelReservationDetailViewController: UIViewController {
         button.backgroundColor = .mainBold
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
+        button.isEnabled = false
         button.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
         
         return button
@@ -182,13 +193,16 @@ class ModelReservationDetailViewController: UIViewController {
         navigationBar.delegate = self
         navigationBar.configure(title: "예약하기")
         
-        configureLocationStackView(makeupLocation: "BOTH")
+        if let artistID = artistID {
+            getPossibleTime(aristId: artistID)
+            getPossibleLocation(aristId: artistID)
+        }
+        
         updateNextButtonState()
         setAction()
         configureSubviews()
         makeConstraints()
         updateWeekdayLabels()
-        setupTimeSelectionButtons()
         view.setupDismissKeyboardOnTapGesture()
     }
     
@@ -213,23 +227,32 @@ class ModelReservationDetailViewController: UIViewController {
     }
     
     // MARK: - makeConstraints
-    private func configureLocationStackView(makeupLocation: String) {
+    private func configureLocationStackView(with makeupLocationData: MakeupLocationData) {
         selectLocationStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
-        switch makeupLocation {
+        selectedLocationType = makeupLocationData.makeupLocation
+        switch makeupLocationData.makeupLocation {
         case "SHOP":
             shopView = ModelReservationShopLocationView()
+            shopView.configureModelReservationShopLocationView(with: makeupLocationData)
+            selectedLocation = makeupLocationData.shopLocation
             selectLocationStackView.addArrangedSubview(shopView)
         case "VISIT":
             visitView = ModelReservationVisitLocationView()
+            visitView.configureModelReservationVisitLocationView(with: makeupLocationData)
+            visitView.delegate = self
+            visitView.visitLocationTextField.delegate = self
+            visitView.visitLocationTextField.addTarget(self, action: #selector(visitLocationTextFieldChanged(_:)), for: .editingChanged)
             selectLocationStackView.addArrangedSubview(visitView)
         case "BOTH":
             bothView = ModelReservationBothLocationView()
+            bothView.configureModelReservationBothLocationView(with: makeupLocationData)
+            bothView.delegate = self
             selectLocationStackView.addArrangedSubview(bothView)
         default:
             break
         }
         view.layoutIfNeeded()
+        updateNextButtonState()
     }
     func makeConstraints() {
         navigationBar.snp.makeConstraints {make in
@@ -310,6 +333,11 @@ class ModelReservationDetailViewController: UIViewController {
     }
     
     // MARK: - Action
+    @objc private func visitLocationTextFieldChanged(_ textField: UITextField) {
+        selectedLocation = textField.text
+        updateNextButtonState()
+    }
+    
     private func setAction() {
         [prevButton, nextButton].forEach {
             ($0 as AnyObject).addTarget(self, action: #selector(moveMonthButtonDidTap(sender:)), for: .touchUpInside)
@@ -329,6 +357,9 @@ class ModelReservationDetailViewController: UIViewController {
     @objc private func nextTapped() {
         guard let selectedDate = selectedDate else { return }
         guard let selectedTime = selectedTime else { return }
+        guard let selectedWeek = selectedWeek else { return }
+        guard let artistName = artistName else { return }
+        
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "M월 d일"
@@ -342,6 +373,18 @@ class ModelReservationDetailViewController: UIViewController {
         }
         let yesAction = UIAlertAction(title: "예", style: .default) { _ in
             let reservationsVC = ModelReservationLastViewController()
+            
+            reservationsVC.portfolioID = self.portfolioID
+            reservationsVC.makeupName = self.selectedMakeupName
+            reservationsVC.selectedDate = self.selectedDate
+            reservationsVC.selectedWeek = self.selectedWeek
+            reservationsVC.selectedTime = self.selectedTime
+            
+            reservationsVC.artistName = self.artistName
+            reservationsVC.locationText = self.selectedLocation
+            
+            reservationsVC.reservationDateText = "\(formattedDate) \(selectedTime)시"
+            
             self.navigationController?.pushViewController(reservationsVC, animated: true)
         }
         
@@ -352,8 +395,45 @@ class ModelReservationDetailViewController: UIViewController {
     }
     
     // MARK: - Methods
+    private func checkLocationValidity() -> Bool {
+        switch selectedLocationType {
+        case "SHOP":
+            return true
+        case "VISIT":
+            return !(selectedVisitLocation?.isEmpty ?? true)
+        case "BOTH":
+            return true
+        case .none:
+            return false
+        case .some(_):
+            return false
+        }
+    }
+    
     
     //MARK: -Helpers
+    private func updateAvailableTimes(for selectedDate: Date) {
+        let weekdayFormatter = DateFormatter()
+        weekdayFormatter.dateFormat = "EEE"
+        let selectedWeekday = weekdayFormatter.string(from: selectedDate).uppercased()
+        
+        let filteredTimes = possibleTimeSlots.filter { $0.availableDayOfWeek.uppercased() == selectedWeekday }
+            .map { timeSlot -> String in
+                let timeComponents = timeSlot.availableTime.components(separatedBy: "_")
+                guard timeComponents.count == 3, let hour = Int(timeComponents[1]), let minute = Int(timeComponents[2]) else {
+                    return ""
+                }
+                let formattedTime = String(format: "%02d:%02d", hour, minute)
+                return formattedTime
+            }
+            .filter { !$0.isEmpty }
+        
+        DispatchQueue.main.async {
+            self.setupTimeSelectionButtons(with: filteredTimes)
+        }
+    }
+    
+    
     private func updateWeekdayLabels() {
         let weekdayLabels = calendarView.calendarWeekdayView.weekdayLabels
         let customWeekdays = ["M", "T", "W", "T", "F", "S", "S"]
@@ -373,7 +453,13 @@ class ModelReservationDetailViewController: UIViewController {
         return maxButtons
     }
     
-    private func setupTimeSelectionButtons() {
+    private func setupTimeSelectionButtons(with availableTimes: [String]) {
+        morningVerticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        afternoonVerticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        var morningTimeAvailable = false
+        var afternoonTimeAvailable = false
+        
         var currentMorningStackView = createNewHorizontalStackView()
         morningVerticalStackView.addArrangedSubview(currentMorningStackView)
         
@@ -390,14 +476,30 @@ class ModelReservationDetailViewController: UIViewController {
                     morningVerticalStackView.addArrangedSubview(currentMorningStackView)
                 }
                 currentMorningStackView.addArrangedSubview(button)
+                morningTimeAvailable = true
             } else {
                 if currentAfternoonStackView.arrangedSubviews.count >= maxNumberOfButtonsPerRow() {
                     currentAfternoonStackView = createNewHorizontalStackView()
                     afternoonVerticalStackView.addArrangedSubview(currentAfternoonStackView)
                 }
                 currentAfternoonStackView.addArrangedSubview(button)
+                afternoonTimeAvailable = true
             }
         }
+        
+        if !morningTimeAvailable {
+            let noMorningTimeLabel = UILabel()
+            noMorningTimeLabel.text = "예약 가능한 시간이 없어요"
+            noMorningTimeLabel.textColor = .mainBold
+            morningVerticalStackView.addArrangedSubview(noMorningTimeLabel)
+        }
+        if !afternoonTimeAvailable {
+            let noAfternoonTimeLabel = UILabel()
+            noAfternoonTimeLabel.text = "예약 가능한 시간이 없어요"
+            noAfternoonTimeLabel.textColor = .mainBold
+            afternoonVerticalStackView.addArrangedSubview(noAfternoonTimeLabel)
+        }
+        
         fillRemainingSpaceInLastStackView(currentMorningStackView)
         fillRemainingSpaceInLastStackView(currentAfternoonStackView)
     }
@@ -414,7 +516,7 @@ class ModelReservationDetailViewController: UIViewController {
             }
         }
     }
-
+    
     private func createNewVerticalStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -449,23 +551,48 @@ class ModelReservationDetailViewController: UIViewController {
         
         sender.layer.borderColor = UIColor.mainBold.cgColor
         sender.backgroundColor = .mainBold
+        sender.setTitleColor(.white, for: .normal)
         selectedTimeButton = sender
         
-        // 선택된 시간 저장 -> 추후 api post 요청할때 전송
         selectedTime = sender.title(for: .normal)
         updateNextButtonState()
     }
-    // 날짜가 선택될 때 호출되는 메서드 (FSCalendarDelegate 메서드 내에서 호출)
+    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = date
+        updateAvailableTimes(for: date)
         updateNextButtonState()
     }
     
-    //모두 선택해야 다음 버튼 활성화
+    func didSelectLocationType(_ type: String) {
+        selectedLocationType = type
+        if type == "SHOP" {
+            selectedLocation = "샵의 위치"
+        } else if type == "VISIT" {
+            selectedLocation = selectedVisitLocation
+        }
+        updateNextButtonState()
+    }
+    func didSelectShopLocation(_ location: String) {
+        selectedLocation = location
+        updateNextButtonState()
+    }
+    
+    func didSelectVisitLocation(_ location: String) {
+        selectedVisitLocation = location
+        updateNextButtonState()
+    }
+    
+    
     private func updateNextButtonState() {
-        reservationButton.isEnabled = selectedDate != nil && selectedTime != nil
+        let isDateAndTimeSelected = selectedDate != nil && selectedTime != nil
+        let isLocationValid = checkLocationValidity()
+        print(isLocationValid)
         
-        reservationButton.backgroundColor = reservationButton.isEnabled ? .mainBold : .gray300
+        DispatchQueue.main.async {
+            self.reservationButton.isEnabled = isDateAndTimeSelected && isLocationValid
+            self.reservationButton.backgroundColor = self.reservationButton.isEnabled ? .mainBold : .gray300
+        }
     }
 }
     
@@ -496,7 +623,45 @@ extension ModelReservationDetailViewController: FSCalendarDelegate, FSCalendarDa
     
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         let today = Date()
+        selectedDate = date
+            updateAvailableTimes(for: date)
+            updateNextButtonState()
+        
+        let weekday = Calendar.current.component(.weekday, from: date)
+        let weekdaySymbol = Calendar.current.weekdaySymbols[weekday - 1]
+        
+        if let week = WeekdayToSelectedWeek(rawValue: weekdaySymbol) {
+            switch week {
+            case .sunday:
+                selectedWeek = "SUN"
+            case .monday:
+                selectedWeek = "MON"
+            case .tuesday:
+                selectedWeek = "TUE"
+            case .wednesday:
+                selectedWeek = "WED"
+            case .thursday:
+                selectedWeek = "THU"
+            case .friday:
+                selectedWeek = "FRI"
+            case .saturday:
+                selectedWeek = "SAT"
+            }
+        } else {
+            selectedWeek = nil
+        }
+        
         return date >= today
+    }
+    
+    enum WeekdayToSelectedWeek: String {
+        case sunday = "Sunday"
+        case monday = "Monday"
+        case tuesday = "Tuesday"
+        case wednesday = "Wednesday"
+        case thursday = "Thursday"
+        case friday = "Friday"
+        case saturday = "Saturday"
     }
 }
 
@@ -506,5 +671,49 @@ extension ModelReservationDetailViewController: BackButtonTappedDelegate  {
         if let navigationController = self.navigationController {
             navigationController.popViewController(animated: true)
         }
+    }
+}
+
+//MARK: -API 통신 메소드
+extension ModelReservationDetailViewController {
+    func getPossibleLocation(aristId: Int) {
+        ReservationManager.shared.getPossibleLocation(aristId: aristId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let locationsDTO):
+                    self?.configureLocationStackView(with: locationsDTO.data)
+                case .failure(let error):
+                    print("예약 가능 장소 정보 조회 실패: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    func getPossibleTime(aristId: Int) {
+        ReservationManager.shared.getPossibleTime(aristId: aristId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let timesDTO):
+                    self?.possibleTimeSlots = timesDTO.data
+                    if let selectedDate = self?.selectedDate {
+                        self?.updateAvailableTimes(for: selectedDate)
+                    }
+                case .failure(let error):
+                    print("예약 가능 시간 정보 조회 실패: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+}
+
+extension ModelReservationDetailViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        selectedVisitLocation = textField.text
+    }
+}
+
+extension ModelReservationDetailViewController: ModelReservationVisitLocationViewDelegate {
+    func didEnterVisitLocation(_ location: String) {
+        selectedLocation = location
+        updateNextButtonState()
     }
 }

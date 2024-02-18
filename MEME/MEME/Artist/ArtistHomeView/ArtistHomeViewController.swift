@@ -20,7 +20,7 @@ final class ArtistHomeViewController: UIViewController {
     @IBOutlet weak var secondArtistResLabel: UILabel!
     @IBOutlet weak var secondArtistTimeLabel: UILabel!
     
-    private var artistNickName : String!
+    private var artistNickName : String = "메메"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +96,7 @@ extension ArtistHomeViewController : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = artistReservationStatusTableView.dequeueReusableCell(withIdentifier: ArtistReservationStatusTableViewCell.identifier, for: indexPath) as? ArtistReservationStatusTableViewCell else { return UITableViewCell() }
-        let reservation = ReservationData(resMakeupName: resMakeUpNameArray[indexPath.row], resDate: resDateArray[indexPath.row])
+        let reservation = ReservationDummyData(resMakeupName: resMakeUpNameArray[indexPath.row], resDate: resDateArray[indexPath.row])
         cell.delegate = self
         return cell
     }

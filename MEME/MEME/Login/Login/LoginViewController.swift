@@ -7,6 +7,7 @@
 
 import UIKit
 import KakaoSDKUser
+import AuthenticationServices
 
 final class LoginViewController: UIViewController {
     
@@ -25,22 +26,6 @@ final class LoginViewController: UIViewController {
     @IBAction private func appleLoginButtonTapped(_ sender: Any) {
         appleLogin()
     }
-    
-    @IBAction func testButtonTapped(_ sender: Any) {
-        let manager = ReservationManager.shared
-        
-        manager.postReservation(
-            modelId: 1,
-            portfolioId: 1,
-            date: "2024-01-01",
-            time: ._06_30,
-            dayOfWeek: .SAT,
-            location: "강남구 어디어디"
-        ) { result in
-                print(result)
-            }
-    }
-    
 }
 
 // MARK: - login 로직
@@ -51,38 +36,41 @@ extension LoginViewController {
     }
     
     private func appleLogin() {
-        print("sss")
-        if (UserApi.isKakaoTalkLoginAvailable()) {
-            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    print("loginWithKakaoTalk() success.")
-                    print(oauthToken?.idToken)
-                    
-                    AuthManager.shared.a { result in
-                        switch result {
-                        case .success(let response):
-                            print("a")
-                        case .failure(let response):
-                            print("b")
-                        }
-                    }
-                }
-            }
-        } else {
-            UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    print("loginWithKakaoAccount() success.")
-                    
-                    //do something
-                    _ = oauthToken
-                }
-            }
+        
+        let provider = ASAuthorizationAppleIDProvider()
+        let request = provider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+          authorizationController.delegate = self
+          authorizationController.presentationContextProvider = self
+          authorizationController.performRequests()
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        let authManager = AuthManager.shared
+        guard
+            let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
+            let identityToken = credential.identityToken,
+            let tokenString = String(data: identityToken, encoding: .utf8)
+        else { return }
+        
+        print("token start")
+        print(tokenString)
+        authManager.login(idToken: tokenString, socialProvider: .APPLE) { result in
+            print(result)
         }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print(error.localizedDescription)
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return view.window!
     }
 }

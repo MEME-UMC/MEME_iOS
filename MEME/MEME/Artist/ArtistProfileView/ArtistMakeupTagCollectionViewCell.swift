@@ -20,6 +20,13 @@ final class ArtistMakeupTagCollectionViewCell: UICollectionViewCell {
         // Initialization code
         uiSet()
     }
+    
+    // 셀 재사용 문제... 카톡에서 카톡방 이미지 동일하게 쭈루룩 나오는 경우와 같은 경우
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        deSelected()
+    }
+    
     private func uiSet(){
         makeupTagView.layer.borderColor = UIColor(resource: .mainBold).cgColor
         makeupTagView.layer.cornerRadius = makeupTagView.frame.height/2

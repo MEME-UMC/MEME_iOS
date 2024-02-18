@@ -68,14 +68,6 @@
                     <color key="textColor" name="MainBold"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vO-3I-Ffk">
-                    <rect key="frame" x="159" y="408.66666666666669" width="75" height="35"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                    <connections>
-                        <action selector="testButtonTapped:" destination="-1" eventType="touchUpInside" id="UTj-E0-fZK"/>
-                    </connections>
-                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -87,11 +79,9 @@
                 <constraint firstItem="Gef-Aq-XcI" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="9Mq-3x-kU0"/>
                 <constraint firstItem="cb4-Gw-KaC" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="166" id="CeB-rN-8oW"/>
                 <constraint firstItem="Eyl-2K-fah" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="24" id="JnD-M9-70v"/>
-                <constraint firstItem="3vO-3I-Ffk" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ReL-L2-OTM"/>
                 <constraint firstItem="2w2-nz-b84" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="WkR-s6-E4F"/>
                 <constraint firstItem="Gef-Aq-XcI" firstAttribute="top" secondItem="2w2-nz-b84" secondAttribute="bottom" constant="15" id="X3b-ZS-rCR"/>
                 <constraint firstItem="c5T-0a-Job" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="hlU-6H-lBg"/>
-                <constraint firstItem="3vO-3I-Ffk" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="jPP-Kc-IPe"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Eyl-2K-fah" secondAttribute="trailing" constant="24" id="jw9-KC-ojS"/>
                 <constraint firstItem="cb4-Gw-KaC" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="p8f-vM-FxF"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="c5T-0a-Job" secondAttribute="bottom" constant="139" id="ue7-Kr-kqJ"/>

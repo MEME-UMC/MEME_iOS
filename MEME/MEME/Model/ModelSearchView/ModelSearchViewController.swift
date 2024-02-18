@@ -7,11 +7,20 @@
 
 import UIKit
 
+protocol ModelSearchViewControllerDelegate: AnyObject {
+    func didEnterSearchKeyword(_ keyword: String)
+}
+
+struct ArtistModel {
+    let artistNickName: String
+    let artistId: Int
+}
+
 class ModelSearchViewController: UIViewController {
-    // 예시 데이터 -> 추후 API 호출해서 데이터 받아오는 것으로 수정 필요
-    private let artists = ["차차", "리타","딩동", "마요", "전얀", "웅아", "돌리", "요비", "썬", "제이스", "아티스트명"]
-    
     //MARK: -Properties
+    private var favoriteArtists: [ArtistModel] = []
+    private var artistIdForButton: [UIButton: Int] = [:]
+    
     private var navigationBarView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -123,7 +132,9 @@ class ModelSearchViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.setNavigationBarHidden(true, animated: false)
+        setupDismissKeyboardOnTapGesture()
         
+        fetchFavoriteArtists()
         setupSearchCollectionView()
         setupRecentSearchCollectionView()
         setupSearchMakeupBar()
@@ -223,10 +234,12 @@ class ModelSearchViewController: UIViewController {
     }
     
     @objc private func artistButtonTapped(_ sender: UIButton) {
-            guard let artistName = sender.titleLabel?.text else { return }
-
-            searchMakeup.text = artistName
-            executeSearch(with: artistName)}
+        guard let artistId = artistIdForButton[sender] else { return }
+        
+        let searchResultVC = ModelSearchResultViewController()
+        searchResultVC.selectedArtistId = artistId
+        navigationController?.pushViewController(searchResultVC, animated: true)
+    }
 
     private func executeSearch(with searchText: String) {
         searchBarSearchButtonClicked(searchMakeup)
@@ -276,8 +289,9 @@ class ModelSearchViewController: UIViewController {
         var currentStackView = createNewHorizontalStackView()
         artistsVerticalStackView.addArrangedSubview(currentStackView)
         
-        for artist in artists {
-            let button = createButton(with: artist)
+        for artist in favoriteArtists {
+            let button = createButton(with: artist.artistNickName)
+            artistIdForButton[button] = artist.artistId
             
             if currentStackView.arrangedSubviews.count >= maxNumberOfButtonsPerRow() {
                 currentStackView = createNewHorizontalStackView()
@@ -415,10 +429,10 @@ extension ModelSearchViewController: UICollectionViewDelegateFlowLayout {
             let cell = collectionView.cellForItem(at: indexPath) as? CategorySearchViewCell
             let category = cell?.categoryLabel.text
             
-            let reservationChartVC = ModelReservationChartViewController()
-            reservationChartVC.selectedCategory = category
-            
-            navigationController?.pushViewController(reservationChartVC, animated: true)
+            let searchResultVC = ModelSearchResultViewController()
+            searchResultVC.selectedCategory = category
+
+            navigationController?.pushViewController(searchResultVC, animated: true)
         }
     }
 }
@@ -428,19 +442,33 @@ extension ModelSearchViewController: UISearchBarDelegate {
         searchBar.text = ""
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) { searchBar.resignFirstResponder()
+        
+        let searchResultVC = ModelSearchResultViewController()
+        
         if let searchText = searchBar.text, !searchText.isEmpty {
             saveSearchKeyword(keyword: searchText)
-            
             recentSearchKeywords = loadSearchKeywords()
             recentSearchesCollectionView.reloadData()
-            
-            let reservationChartVC = ModelReservationChartViewController()
-            navigationController?.pushViewController(reservationChartVC, animated: true)
+            searchResultVC.searchKeyword = searchText
         }
+        
+        navigationController?.pushViewController(searchResultVC, animated: true)
     }
 }
+
+extension ModelSearchViewController {
+    func setupDismissKeyboardOnTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
 
 //MARK: - RecentSearchViewCellDelegate
 extension ModelSearchViewController: RecentSearchViewCellDelegate {
@@ -468,8 +496,9 @@ extension ModelSearchViewController: RecentSearchViewCellDelegate {
     
     //최근 검색어로 검색
     func didTapSearchWord(keyword: String) {
-        let reservationChartVC = ModelReservationChartViewController()
-        navigationController?.pushViewController(reservationChartVC, animated: true)
+        let searchResultVC = ModelSearchResultViewController()
+        searchResultVC.searchKeyword = keyword
+        navigationController?.pushViewController(searchResultVC, animated: true)
     }
     
     //최근 검색어 삭제
@@ -490,4 +519,40 @@ extension ModelSearchViewController: RecentSearchViewCellDelegate {
        recentSearchKeywords.removeAll()
        recentSearchesCollectionView.reloadData()
    }
+}
+
+//MARK: -API 통신 메소드
+extension ModelSearchViewController {
+    func fetchFavoriteArtists() {
+        // modelId 임의 설정
+        let modelId = 6
+        
+        MyPageManager.shared.getFavoriteArtists(modelId: modelId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    if let artistsData = response.data, let content = artistsData.content {
+                            self?.favoriteArtists = content.map {artistInfo in
+                                ArtistModel(
+                                    artistNickName: artistInfo.artistNickName,
+                                    artistId: artistInfo.artistId)
+                            }
+                        } else {
+                            self?.favoriteArtists = []
+                        }
+                        self?.setupArtistsButtons()
+                        if self?.favoriteArtists.isEmpty == true {
+                            self?.artistSearchesLabel.isHidden = true
+                        } else {
+                            self?.artistSearchesLabel.isHidden = false
+                        }
+                case .failure(let error):
+                    if let responseData = error.response {
+                        let responseString = String(data: responseData.data, encoding: .utf8)
+                        print("Received error response: \(responseString ?? "no data")")
+                    }
+                }
+            }
+        }
+    }
 }

@@ -20,6 +20,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SetBusinessInfoViewController" customModule="MEME" customModuleProvider="target">
             <connections>
+                <outlet property="careerButton" destination="PQm-ja-lTS" id="5ck-Zj-vYG"/>
                 <outlet property="careerLabel" destination="LcZ-ff-8Fe" id="fVV-be-HJQ"/>
                 <outlet property="careerView" destination="dXS-bT-snp" id="dMl-6q-JW4"/>
                 <outlet property="femaleButton" destination="vM7-Zy-2K7" id="z8u-yO-IB3"/>
@@ -31,6 +32,7 @@
                 <outlet property="profileImageView" destination="gmJ-Fa-1Vn" id="aZZ-Gy-5MM"/>
                 <outlet property="progressBar" destination="SxU-y8-1N9" id="JjU-28-BQb"/>
                 <outlet property="scrollView" destination="2rS-Y8-hnc" id="eAM-KW-k4v"/>
+                <outlet property="verificationButton" destination="Wq3-7E-7kc" id="mmR-2f-cUg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="warningLabel" destination="aBu-1W-Lgl" id="5Tj-SH-FQh"/>
             </connections>
@@ -73,7 +75,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5tU-83-6Su" userLabel="ContentView">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="688"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gmJ-Fa-1Vn">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfileImage" translatesAutoresizingMaskIntoConstraints="NO" id="gmJ-Fa-1Vn">
                                     <rect key="frame" x="149.66666666666666" y="0.0" width="94" height="94"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="94" id="V3W-v4-pne"/>
@@ -114,20 +116,20 @@
                                     <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="닉네임은 최대 15자 작성 가능합니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBu-1W-Lgl">
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="닉네임은 최대 15자 작성 가능합니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBu-1W-Lgl">
                                     <rect key="frame" x="24" y="173.66666666666669" width="173" height="14.333333333333343"/>
                                     <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="12"/>
                                     <color key="textColor" systemColor="systemRedColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="닉네임" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPZ-Vl-HMS">
-                                    <rect key="frame" x="24.000000000000004" y="202" width="36.333333333333343" height="17"/>
+                                    <rect key="frame" x="24.000000000000004" y="201" width="36.333333333333343" height="17"/>
                                     <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rzi-T2-hn2">
-                                    <rect key="frame" x="24" y="227" width="345" height="45"/>
+                                    <rect key="frame" x="24" y="226" width="345" height="45"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vM7-Zy-2K7">
                                             <rect key="frame" x="0.0" y="0.0" width="167.66666666666666" height="45"/>
@@ -157,30 +159,29 @@
                                     </constraints>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="자기소개 (최대 250자)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogN-d8-ulG">
-                                    <rect key="frame" x="23.999999999999993" y="286" width="126.33333333333331" height="17"/>
+                                    <rect key="frame" x="23.999999999999993" y="285" width="126.33333333333331" height="17"/>
                                     <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XIa-ia-GSz">
-                                    <rect key="frame" x="24" y="311" width="345" height="181"/>
+                                    <rect key="frame" x="24" y="310" width="345" height="181"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="181" id="3i1-oE-7uT"/>
                                     </constraints>
-                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                     <color key="textColor" systemColor="labelColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="총 경력 기간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbv-rL-iod">
-                                    <rect key="frame" x="24" y="506" width="67.666666666666671" height="17"/>
+                                    <rect key="frame" x="24" y="505" width="67.666666666666671" height="17"/>
                                     <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dXS-bT-snp">
-                                    <rect key="frame" x="24" y="531" width="345" height="41"/>
+                                    <rect key="frame" x="24" y="530" width="345" height="41"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="선택해주세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LcZ-ff-8Fe">
                                             <rect key="frame" x="13" y="12" width="72.666666666666671" height="17"/>
@@ -189,7 +190,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_arrow_down" translatesAutoresizingMaskIntoConstraints="NO" id="7ff-f0-Iag">
-                                            <rect key="frame" x="312.33333333333331" y="10.333333333333371" width="20" height="20"/>
+                                            <rect key="frame" x="312.33333333333331" y="10.666666666666629" width="20" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="1Vx-lQ-I4T"/>
                                                 <constraint firstAttribute="height" constant="20" id="lSq-E8-W1g"/>
@@ -199,9 +200,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="345" height="41"/>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" title=""/>
-                                            <connections>
-                                                <action selector="careerButtonTapped:" destination="-1" eventType="touchUpInside" id="AYE-MV-MI3"/>
-                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -217,6 +215,21 @@
                                         <constraint firstAttribute="height" constant="41" id="y0F-na-XMs"/>
                                     </constraints>
                                 </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wq3-7E-7kc">
+                                    <rect key="frame" x="300" y="137.66666666666669" width="59" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="59" id="NQY-sy-qWD"/>
+                                        <constraint firstAttribute="height" constant="22" id="sWV-I2-Hb4"/>
+                                    </constraints>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="인증하기">
+                                        <fontDescription key="titleFontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="10"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="verificationButtonTapped:" destination="-1" eventType="touchUpInside" id="ytV-ep-vfC"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
@@ -225,7 +238,7 @@
                                 <constraint firstItem="gmJ-Fa-1Vn" firstAttribute="bottom" secondItem="BMT-ww-UdC" secondAttribute="bottom" id="4w2-2x-eUd"/>
                                 <constraint firstItem="NPZ-Vl-HMS" firstAttribute="leading" secondItem="5tU-83-6Su" secondAttribute="leading" constant="24" id="8lG-Iu-h7q"/>
                                 <constraint firstAttribute="trailing" secondItem="dXS-bT-snp" secondAttribute="trailing" constant="24" id="AQ6-4w-n6N"/>
-                                <constraint firstItem="NPZ-Vl-HMS" firstAttribute="top" secondItem="aBu-1W-Lgl" secondAttribute="bottom" constant="14" id="AZZ-Mf-jUA"/>
+                                <constraint firstItem="NPZ-Vl-HMS" firstAttribute="top" secondItem="C5n-LF-ubE" secondAttribute="bottom" constant="32" id="AZZ-Mf-jUA"/>
                                 <constraint firstItem="XiT-42-tfc" firstAttribute="leading" secondItem="5tU-83-6Su" secondAttribute="leading" constant="24" id="Al1-CS-J19"/>
                                 <constraint firstItem="mdF-j0-2qM" firstAttribute="trailing" secondItem="gmJ-Fa-1Vn" secondAttribute="trailing" id="AwB-DL-f9v"/>
                                 <constraint firstItem="mdF-j0-2qM" firstAttribute="leading" secondItem="gmJ-Fa-1Vn" secondAttribute="leading" id="Cf0-ap-gzU"/>
@@ -234,12 +247,14 @@
                                 <constraint firstItem="gbv-rL-iod" firstAttribute="leading" secondItem="5tU-83-6Su" secondAttribute="leading" constant="24" id="ITK-Qo-HtG"/>
                                 <constraint firstItem="Rzi-T2-hn2" firstAttribute="top" secondItem="NPZ-Vl-HMS" secondAttribute="bottom" constant="8" id="IZC-a6-q6D"/>
                                 <constraint firstItem="C5n-LF-ubE" firstAttribute="leading" secondItem="5tU-83-6Su" secondAttribute="leading" constant="24" id="M9c-nv-Sc4"/>
+                                <constraint firstItem="C5n-LF-ubE" firstAttribute="trailing" secondItem="Wq3-7E-7kc" secondAttribute="trailing" constant="10" id="PIO-bC-hnI"/>
                                 <constraint firstItem="gmJ-Fa-1Vn" firstAttribute="centerX" secondItem="5tU-83-6Su" secondAttribute="centerX" id="PZO-PS-fkh"/>
                                 <constraint firstItem="ogN-d8-ulG" firstAttribute="leading" secondItem="5tU-83-6Su" secondAttribute="leading" constant="24" id="Pck-HA-1U7"/>
                                 <constraint firstItem="Rzi-T2-hn2" firstAttribute="leading" secondItem="5tU-83-6Su" secondAttribute="leading" constant="24" id="QIj-ec-vMg"/>
                                 <constraint firstItem="gmJ-Fa-1Vn" firstAttribute="trailing" secondItem="BMT-ww-UdC" secondAttribute="trailing" constant="-8" id="SWu-Oy-n7R"/>
                                 <constraint firstItem="gbv-rL-iod" firstAttribute="top" secondItem="XIa-ia-GSz" secondAttribute="bottom" constant="14" id="Uxl-5k-LYo"/>
                                 <constraint firstItem="C5n-LF-ubE" firstAttribute="top" secondItem="XiT-42-tfc" secondAttribute="bottom" constant="5" id="Y49-3a-xVT"/>
+                                <constraint firstItem="Wq3-7E-7kc" firstAttribute="centerY" secondItem="C5n-LF-ubE" secondAttribute="centerY" id="Y5q-jj-8wV"/>
                                 <constraint firstAttribute="trailing" secondItem="XIa-ia-GSz" secondAttribute="trailing" constant="24" id="dLl-UP-C6C"/>
                                 <constraint firstItem="aBu-1W-Lgl" firstAttribute="top" secondItem="C5n-LF-ubE" secondAttribute="bottom" constant="4.6600000000000001" id="e6w-Cw-K1H"/>
                                 <constraint firstItem="dXS-bT-snp" firstAttribute="leading" secondItem="5tU-83-6Su" secondAttribute="leading" constant="24" id="gvh-xY-Uer"/>
@@ -286,6 +301,7 @@
         </view>
     </objects>
     <resources>
+        <image name="defaultProfileImage" width="137" height="137"/>
         <image name="ic_arrow_down" width="20.333333969116211" height="20.333333969116211"/>
         <image name="ic_pencil" width="28" height="28"/>
         <namedColor name="MainBold">
@@ -298,7 +314,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

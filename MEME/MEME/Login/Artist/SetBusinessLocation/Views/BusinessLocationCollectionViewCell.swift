@@ -17,13 +17,6 @@ final class BusinessLocationCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var countLabel: UILabel = {
-        let label = UILabel()
-        label.font = .pretendard(to: .semiBold, size: 12)
-        label.textColor = .gray500
-        return label
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -44,22 +37,16 @@ final class BusinessLocationCollectionViewCell: UICollectionViewCell {
     
     private func setLayout() {
         contentView.addSubview(locationLabel)
-        contentView.addSubview(countLabel)
         
         locationLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(24)
-        }
-            
-        countLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-24)
+            $0.center.equalToSuperview()
         }
     }
     
-    func configure(location: String, count: Int) {
+    func configure(
+        location: String
+    ) {
         locationLabel.text = location
-        countLabel.text = "(\(count)개)"
     }
     
     func setColor(isSelected: Bool) {
@@ -68,6 +55,5 @@ final class BusinessLocationCollectionViewCell: UICollectionViewCell {
         
         contentView.layer.borderColor = layerColor.cgColor
         locationLabel.textColor = textColor
-        countLabel.textColor = textColor
     }
 }

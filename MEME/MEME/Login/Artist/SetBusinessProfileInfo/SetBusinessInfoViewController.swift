@@ -23,9 +23,16 @@ final class SetBusinessInfoViewController: UIViewController {
     @IBOutlet private weak var careerLabel: UILabel!
     @IBOutlet private weak var nextButton: UIButton!
     @IBOutlet private weak var careerView: UIView!
+    @IBOutlet private weak var careerButton: UIButton!
+    @IBOutlet private weak var verificationButton: UIButton!
     
+    private lazy var pickerView = UIPickerView()
     private var phpPicker: PHPickerViewController?
     private var imagePicker: UIImagePickerController?
+    private var isGenderSelected = false
+    private var isVerified = true
+    private var career: String?
+    private var builder = ArtistProfileInfoBuilder()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,14 +57,66 @@ final class SetBusinessInfoViewController: UIViewController {
             $0?.layer.borderColor = UIColor.gray400.cgColor
             $0?.layer.cornerRadius = 9
         }
-        
+
         setUpPhpPicker()
         setUpimagePicker()
+        setCareerButton()
         scrollView.delegate = self
+        verificationButton.layer.cornerRadius = 10
+        verificationButton.layer.borderColor = UIColor.mainBold.cgColor
+        verificationButton.layer.borderWidth = 1
+        nameTextField.delegate = self
+        
+        setNextButton()
     }
     
+    private func setCareerButton() {
+        var careerActions: [UIAction] = []
+
+        for experience in WorkExperience.allCases {
+            let action = UIAction(
+                title: experience.description,
+                image: nil,
+                handler: { [weak self] _ in
+                    self?.careerLabel.text = experience.description
+                    self?.career = experience.rawValue
+                    self?.setNextButton()
+                }
+            )
+            careerActions.append(action)
+            careerButton.showsMenuAsPrimaryAction = true
+        }
+
+        careerButton.menu = UIMenu(
+            title: "",
+            image: nil,
+            identifier: nil,
+            options: .displayInline,
+            children: careerActions
+        )
+    }
+    
+    private func setNextButton() {
+        guard
+            nameTextField.text != nil,
+            career != nil,
+            isVerified
+        else {
+            nextButton.backgroundColor = .gray300
+            nextButton.isEnabled = false
+            return
+        }
+        
+        if let text = introduceTextView.text {
+            builder = builder.introduction(text)
+        }
+
+        nextButton.backgroundColor = .mainBold
+        nextButton.isEnabled = true
+    }
     
     @IBAction private func genderButtonTapped(_ sender: UIButton) {
+        isGenderSelected = true
         let buttons = [maleButton, femaleButton]
         
         buttons.forEach {
@@ -69,6 +128,14 @@ final class SetBusinessInfoViewController: UIViewController {
                 $0?.tintColor = .black
             }
         }
+        
+        if sender.tag == 0 {
+            builder = builder.gender(.FEMALE)
+        } else {
+            builder = builder.gender(.MALE)
+        }
+        
+        setNextButton()
     }
     
     @IBAction private func profileImageButtonTapped(_ sender: Any) {
@@ -89,16 +156,36 @@ final class SetBusinessInfoViewController: UIViewController {
         alert.addAction(cameraAction)
         alert.addAction(cancelAction)
         present(alert, animated: true)
-    }
-    
-    @IBAction private func careerButtonTapped(_ sender: Any) {
-    }
-    
+    }    
     
     @IBAction private func nextButtonTapped(_ sender: Any) {
+        guard
+            let nickName = nameTextField.text,
+            let career = career,
+            isVerified
+        else {
+            nextButton.backgroundColor = .gray300
+            nextButton.isEnabled = false
+            return
+        }
+        
+        builder = builder.nickName(nickName)
+        builder = builder.workExperience(career)
+        
+        if let text = introduceTextView.text {
+            builder = builder.introduction(text)
+        }
+        
         let nextVC = SetBusinessLocationViewController()
+        nextVC.configure(builder: builder)
         navigationController?.pushViewController(nextVC, animated: true)
     }
+    
+    @IBAction private func verificationButtonTapped(_ sender: Any) {
+        isVerified = true
+        setNextButton()
+    }
+    
 }
 
 // MARK: - 사진 선택 설정
@@ -162,4 +249,22 @@ extension SetBusinessInfoViewController: BackButtonTappedDelegate {
 
 extension SetBusinessInfoViewController: UIScrollViewDelegate {
     
+}
+
+
+extension SetBusinessInfoViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        isVerified = false
+        warningLabel.isHidden = true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text {
+            if text.count > 15 {
+                warningLabel.text = "닉네임은 최대 15자 작성가능합니다."
+                warningLabel.textColor = .red
+                warningLabel.isHidden = false
+            }
+        }
+    }
 }

@@ -31,4 +31,36 @@ class SelectMakeupCardViewCell: UICollectionViewCell {
             self.layer.shadowRadius = 10
             self.layer.masksToBounds = false
     }
+    
+    func configure(with portfolio: Portfolio) {
+        guard let url = URL(string: portfolio.portfolioImg) else {
+                makeupCardImageView.image = UIImage(named: "SelectMakeupCardIMG")
+                return
+            }
+
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            DispatchQueue.main.async {
+                if let data = data, error == nil {
+                    self?.makeupCardImageView.image = UIImage(data: data)
+                } else {
+                    self?.makeupCardImageView.image = UIImage(named: "SelectMakeupCardIMG")
+                }
+            }
+        }.resume()
+
+        switch portfolio.makeupLocation {
+            case "SHOP":
+                artistInformLabel.text = "샵에 재직 중이에요"
+            case "VISIT":
+                artistInformLabel.text = "방문해서 진행해요"
+            case "BOTH":
+                artistInformLabel.text = "둘 다 상관없어요"
+            default:
+                artistInformLabel.text = "샵 위치 정보가 없어요."
+        }
+        artistNameLabel.text = portfolio.makeupName
+        priceLabel.text = "\(portfolio.price)"
+        
+    }
+
 }

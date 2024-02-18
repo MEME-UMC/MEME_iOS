@@ -41,6 +41,10 @@ final class SetDetailInfoViewController: UIViewController {
         unknownColorView
     ]
     
+    private var selectedSkinType: String?
+    private var selectedPersonalColor: String?
+    private var selectedGender: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -52,21 +56,22 @@ final class SetDetailInfoViewController: UIViewController {
         progressBar.configure(progress: 2)
         completeButton.layer.cornerRadius = 10
         setDetailSettingView()
+        setNextButton()
     }
     
     private func setDetailSettingView() {
-        womanView.configure(title: "여자", tag: 0, type: .gender)
-        manView.configure(title: "남자", tag: 1, type: .gender)
-        drySkinView.configure(title: "건성", tag: 2, type: .skinType)
-        neutralSkinView.configure(title: "중성", tag: 3, type: .skinType)
-        oilySkinView.configure(title: "지성", tag: 4, type: .skinType)
-        combinationSkinView.configure(title: "복합성", tag: 5, type: .skinType)
-        unknownSkinView.configure(title: "모르겠음", tag: 6, type: .skinType)
-        springColorView.configure(title: "봄", tag: 7, type: .personalColor)
-        summerColorView.configure(title: "여름", tag: 8, type: .personalColor)
-        fallColorView.configure(title: "가을", tag: 9, type: .personalColor)
-        winterColorView.configure(title: "겨울", tag: 10, type: .personalColor)
-        unknownColorView.configure(title: "모르겠음", tag: 11, type: .personalColor)
+        womanView.configure(title: Gender.FEMALE.korString, tag: 0, type: .gender)
+        manView.configure(title: Gender.MALE.korString, tag: 1, type: .gender)
+        drySkinView.configure(title: SkinType.DRY.korString, tag: 2, type: .skinType)
+        neutralSkinView.configure(title: SkinType.COMMON.korString, tag: 3, type: .skinType)
+        oilySkinView.configure(title: SkinType.OILY.korString, tag: 4, type: .skinType)
+        combinationSkinView.configure(title: SkinType.COMBINATIONAL.korString, tag: 5, type: .skinType)
+        unknownSkinView.configure(title: SkinType.UNKNOWN.korString, tag: 6, type: .skinType)
+        springColorView.configure(title: PersonalColor.SPRING.korString, tag: 7, type: .personalColor)
+        summerColorView.configure(title: PersonalColor.SUMMER.korString, tag: 8, type: .personalColor)
+        fallColorView.configure(title: PersonalColor.AUTUMN.korString, tag: 9, type: .personalColor)
+        winterColorView.configure(title: PersonalColor.WINTER.korString, tag: 10, type: .personalColor)
+        unknownColorView.configure(title: PersonalColor.UNKNOWN.korString, tag: 11, type: .personalColor)
         
         genderViews.forEach {
             $0?.delegate = self
@@ -82,51 +87,75 @@ final class SetDetailInfoViewController: UIViewController {
     }
     
     private func setNextButton() {
-        
+        guard
+            selectedGender != nil,
+            selectedSkinType  != nil,
+            selectedPersonalColor != nil
+        else {
+            completeButton.backgroundColor = .gray300
+            completeButton.isEnabled = false
+            return
+        }
+        completeButton.isEnabled = true
+        completeButton.backgroundColor = .mainBold
     }
+    
     
     @IBAction private func nextButtonTapped(_ sender: Any) {
         let nextVC = RegistrationCompletionViewController()
+        nextVC.configure(isArtist: false)
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
 extension SetDetailInfoViewController: DetailSettingButtonTapped {
-    private func setGenderView(tag: Int) {
-        genderViews.forEach {
-            $0?.deselect(tag: tag)
-        }
-    }
-    
-    private func setSkinView(tag: Int) {
-        skinViews.forEach {
-            $0?.deselect(tag: tag)
-        }
-    }
-    
-    private func setColorView(tag: Int) {
-        colorViews.forEach {
-            $0?.deselect(tag: tag)
-        }
-    }
-    
-    func detailSettingButtonTapped(
-        isSelected: Bool,
-        tag: Int,
-        type: DetailSettingViewType
-    ) {
-        if isSelected {
-            switch type {
-            case .gender:
-                setGenderView(tag: tag)
-            case .skinType:
-                setSkinView(tag: tag)
-            case .personalColor:
-                setColorView(tag: tag)
-            }
+    func detailSettingButtonTapped(title: String, type: DetailSettingViewType) {
+        switch type {
+        case .gender:
+            setGenderView(title: title)
+        case .personalColor:
+            setColorView(title: title)
+        case .skinType:
+            setSkinView(title: title)
         }
         
         setNextButton()
+    }
+    
+    private func setGenderView(title: String) {
+        Gender.allCases.forEach { gender in
+            if title == gender.korString {
+                selectedGender = gender.rawValue
+            }
+        }
+        
+        genderViews.forEach {
+            $0?.deselect(title: title)
+        }
+    }
+    
+    private func setSkinView(title: String) {
+        SkinType.allCases.forEach { type in
+            if title == type.korString {
+                selectedSkinType = type.rawValue
+            }
+        }
+        
+        skinViews.forEach {
+            $0?.deselect(title: title)
+        }
+    }
+    
+    private func setColorView(title: String) {
+        PersonalColor.allCases.forEach { color in
+            if title == color.korString {
+                selectedPersonalColor = color.rawValue
+            }
+        }
+        
+        colorViews.forEach {
+            $0?.deselect(title: title)
+        }
     }
 }
 

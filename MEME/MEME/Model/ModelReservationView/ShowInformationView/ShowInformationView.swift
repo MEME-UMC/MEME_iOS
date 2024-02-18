@@ -32,6 +32,9 @@ class ShowInformationView: UIView {
         configureSubviews()
         makeConstraints()
     }
+    func configure(infoText: String) {
+        informationLabel.text = infoText
+    }
     
     // MARK: - configureSubviews
     private func configureSubviews() {

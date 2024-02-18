@@ -21,7 +21,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegistrationCompletionViewController" customModule="MEME" customModuleProvider="target">
             <connections>
                 <outlet property="completionButton" destination="ys4-1h-TMI" id="qHV-Ag-k4A"/>
-                <outlet property="navigationBar" destination="L7V-x8-n8f" id="BLb-KZ-piL"/>
                 <outlet property="view" destination="iN0-l3-epB" id="KrJ-Tv-DSP"/>
             </connections>
         </placeholder>
@@ -30,27 +29,20 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L7V-x8-n8f" customClass="NavigationBarView" customModule="MEME" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="59" width="393" height="40"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="7QX-Iw-9Mx"/>
-                    </constraints>
-                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="딩동님, 회원가입이 완료되었습니다!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBt-Wk-Uw8">
-                    <rect key="frame" x="56.666666666666657" y="167" width="280" height="24"/>
+                    <rect key="frame" x="56.666666666666657" y="160" width="280" height="24"/>
                     <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메메에 오신 것을 환영합니다! 프로필을 꾸며 볼까요?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v60-tG-3aH">
-                    <rect key="frame" x="94" y="203" width="205" height="43"/>
+                    <rect key="frame" x="94" y="196" width="205" height="43"/>
                     <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="completionImage" translatesAutoresizingMaskIntoConstraints="NO" id="Cr8-76-sX2">
-                    <rect key="frame" x="117" y="302" width="313" height="318"/>
+                    <rect key="frame" x="117" y="295" width="313" height="318"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="313" id="T47-Ps-3Dj"/>
                         <constraint firstAttribute="height" constant="318" id="zNz-K8-3wp"/>
@@ -67,25 +59,33 @@
                     <buttonConfiguration key="configuration" style="plain" title="메메 시작하기">
                         <fontDescription key="titleFontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="14"/>
                     </buttonConfiguration>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.cornerRadius" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="nextButtonTapped:" destination="-1" eventType="touchUpInside" id="X4l-5U-mh4"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="회원가입" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6p6-CF-sAB">
+                    <rect key="frame" x="168.66666666666666" y="75.666666666666671" width="56" height="20"/>
+                    <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="L7V-x8-n8f" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="1YZ-3V-XkH"/>
-                <constraint firstItem="DBt-Wk-Uw8" firstAttribute="top" secondItem="L7V-x8-n8f" secondAttribute="bottom" constant="68" id="MW8-On-GD6"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="L7V-x8-n8f" secondAttribute="trailing" id="P1X-U9-cgj"/>
+                <constraint firstItem="6p6-CF-sAB" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="O1m-1S-8Pg"/>
+                <constraint firstItem="DBt-Wk-Uw8" firstAttribute="top" secondItem="6p6-CF-sAB" secondAttribute="bottom" constant="64.5" id="QzP-C5-i97"/>
                 <constraint firstItem="ys4-1h-TMI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="24" id="RaW-9s-kLn"/>
                 <constraint firstItem="v60-tG-3aH" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="X9r-Mv-ZxW"/>
                 <constraint firstAttribute="trailing" secondItem="Cr8-76-sX2" secondAttribute="trailing" constant="-37" id="Y8g-dt-NVq"/>
                 <constraint firstItem="DBt-Wk-Uw8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="cdb-cu-Xsb"/>
                 <constraint firstItem="Cr8-76-sX2" firstAttribute="top" secondItem="v60-tG-3aH" secondAttribute="bottom" constant="56" id="ed4-qH-SQh"/>
+                <constraint firstItem="6p6-CF-sAB" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16.5" id="ntE-Yc-hUP"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ys4-1h-TMI" secondAttribute="trailing" constant="24" id="pKV-5E-Lzg"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ys4-1h-TMI" secondAttribute="bottom" constant="9" id="wyH-hw-pYt"/>
-                <constraint firstItem="L7V-x8-n8f" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="xKH-Ik-aeg"/>
                 <constraint firstItem="v60-tG-3aH" firstAttribute="top" secondItem="DBt-Wk-Uw8" secondAttribute="bottom" constant="12" id="y4k-WX-7M9"/>
             </constraints>
             <point key="canvasLocation" x="13" y="21"/>

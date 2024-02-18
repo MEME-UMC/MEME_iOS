@@ -10,6 +10,16 @@ import SnapKit
 
 class ModelReservationLastViewController: UIViewController {
     // MARK: - Properties
+    var portfolioID: Int? = 0
+    var makeupName: String?
+    var selectedDate: Date?
+    var selectedWeek: String?
+    var selectedTime: String?
+    var artistName: String?
+    var locationText: String?
+    
+    var reservationDateText: String?
+    
     private var backgrounImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "img_lastReservation"))
         imageView.contentMode = .scaleAspectFit
@@ -107,6 +117,9 @@ class ModelReservationLastViewController: UIViewController {
         view.backgroundColor = .white
         navigationController?.setNavigationBarHidden(true, animated: false)
         
+        loadData()
+        loadAPI()
+        
         configureSubviews()
         makeConstraints()
     }
@@ -191,5 +204,66 @@ class ModelReservationLastViewController: UIViewController {
             }
         }
     }
+    
+    //MARK: -Method
+    private func loadData() {
+        makeupNameLabel.text = makeupName
+        reservationDateLabel.text = reservationDateText
+        reservationArtistNameLabel.text = artistName
+        reservationLocationLabel.text = locationText
+    }
+    private func loadAPI() {
+        if let selectedWeek = selectedWeek, let selectedTime = selectedTime {
+            let formattedTime = selectedTime.replacingOccurrences(of: ":", with: "_")
+            
+            let reservationDayOfWeekAndTime = [selectedWeek: "_\(formattedTime)"]
+            
+            if let portfolioID = portfolioID, let locationText = locationText {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss.SSSZ"
+                dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                let dateString = dateFormatter.string(from: selectedDate ?? Date())
+                
+                self.postModelReservations(modelId: 6, portfolioId: portfolioID, date: dateString, reservationDayOfWeekAndTime: reservationDayOfWeekAndTime, location: locationText)
+            }
+        }
+    }
 }
+
+//MARK: -API 통신 메소드
+extension ModelReservationLastViewController {
+    func postModelReservations(modelId: Int, portfolioId: Int, date: String, reservationDayOfWeekAndTime: [String: String], location: String) {
+        ReservationManager.shared.postReservation(
+            modelId: modelId,
+            portfolioId: portfolioId,
+            reservationDate: date,
+            reservationDayOfWeekAndTime: reservationDayOfWeekAndTime,
+            location: location
+        ) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let reservationResponse):
+                    print("모델 예약 완료: \(reservationResponse)")
+
+                case .failure(let error):
+                    print("모델 예약 실패: \(error.localizedDescription)")
+                    if let responseData = error.response {
+                        let responseString = String(data: responseData.data, encoding: .utf8)
+                        print("Received error response: \(responseString ?? "no data")")
+                    }
+                    self?.showAlertWithMessage("이미 예약된 시간입니다")
+                }
+            }
+        }
+    }
+    private func showAlertWithMessage(_ message: String) {
+        let alert = UIAlertController(title: "예약 오류", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
 

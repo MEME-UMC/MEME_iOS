@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,10 +20,12 @@
                 <outlet property="firstDeleteButton" destination="oY6-rv-BVb" id="84k-Ue-K0K"/>
                 <outlet property="firstImgView" destination="tf5-Gm-J7k" id="jvz-0V-9wb"/>
                 <outlet property="imagePickerStackView" destination="051-Z1-XBh" id="Qfp-h5-p27"/>
-                <outlet property="infoTextField" destination="VyD-YU-Xch" id="cOx-S0-4Th"/>
+                <outlet property="infoTextView" destination="3Ia-yt-mt4" id="mfj-Ju-UwI"/>
+                <outlet property="infoTextViewPlaceHolderLabel" destination="rtE-Hy-mOa" id="RXg-w3-G7t"/>
                 <outlet property="makeupCategoryCollectionView" destination="LDs-6l-SaI" id="HWZ-2c-Xwm"/>
                 <outlet property="makeupNameTextField" destination="v05-fJ-iDa" id="3dh-IW-lvN"/>
                 <outlet property="priceTextField" destination="k1u-BO-Y1r" id="5P8-eO-dSb"/>
+                <outlet property="scrollFrameView" destination="nNY-vF-dHT" id="2q2-Zx-fYt"/>
                 <outlet property="secondDeleteButton" destination="82z-kA-A3K" id="3Po-HP-1pB"/>
                 <outlet property="secondImgView" destination="iVo-w9-NIz" id="8Qi-qk-Fq0"/>
                 <outlet property="thirdDeleteButton" destination="avw-ak-Jeq" id="mRy-Jd-gI7"/>
@@ -156,15 +159,6 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="roundedRect" placeholder="모델들에게 보여줄 메이크업 정보를 작성해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VyD-YU-Xch">
-                                    <rect key="frame" x="24" y="485" width="345" height="181"/>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="181" id="o9b-0K-vyW"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="TopLeft" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="LDs-6l-SaI" userLabel="ProTag Collection View">
                                     <rect key="frame" x="24" y="167" width="349" height="120"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -249,24 +243,41 @@
                                         <action selector="deleteImg:" destination="-1" eventType="touchUpInside" id="M3r-74-N0l"/>
                                     </connections>
                                 </button>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ia-yt-mt4">
+                                    <rect key="frame" x="24" y="485" width="345" height="181"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="181" id="ZTj-Yn-WgG"/>
+                                    </constraints>
+                                    <color key="textColor" systemColor="labelColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="모델들에게 보여줄 메이크업 정보를 작성해주세요." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtE-Hy-mOa">
+                                    <rect key="frame" x="34" y="492" width="273.66666666666669" height="17"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <color key="textColor" name="Gray400"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="Kb3-ni-pgU" firstAttribute="leading" secondItem="nNY-vF-dHT" secondAttribute="leading" constant="24" id="0Ak-yt-5Ju"/>
                                 <constraint firstItem="IJf-Lj-Jbj" firstAttribute="top" secondItem="051-Z1-XBh" secondAttribute="top" id="54A-ea-cBd"/>
-                                <constraint firstItem="VyD-YU-Xch" firstAttribute="top" secondItem="MY3-dc-Re1" secondAttribute="bottom" constant="5" id="6cN-eC-A4b"/>
                                 <constraint firstItem="IVb-Ma-laL" firstAttribute="top" secondItem="051-Z1-XBh" secondAttribute="bottom" constant="12" id="8BV-T5-OQW"/>
                                 <constraint firstItem="v05-fJ-iDa" firstAttribute="leading" secondItem="nNY-vF-dHT" secondAttribute="leading" constant="24" id="9du-bp-dez"/>
                                 <constraint firstItem="gQW-Xm-NYL" firstAttribute="top" secondItem="avw-ak-Jeq" secondAttribute="top" constant="8" id="Ay3-z6-OMJ"/>
+                                <constraint firstItem="3Ia-yt-mt4" firstAttribute="top" secondItem="MY3-dc-Re1" secondAttribute="bottom" constant="5" id="BeA-Cc-IQV"/>
                                 <constraint firstItem="Kb3-ni-pgU" firstAttribute="top" secondItem="LDs-6l-SaI" secondAttribute="bottom" constant="22" id="CIy-jZ-Lit"/>
+                                <constraint firstItem="3Ia-yt-mt4" firstAttribute="leading" secondItem="MY3-dc-Re1" secondAttribute="leading" id="Ff7-KJ-nU0"/>
                                 <constraint firstItem="k1u-BO-Y1r" firstAttribute="top" secondItem="OOM-ci-ZeT" secondAttribute="bottom" constant="5" id="HRs-ml-ERp"/>
                                 <constraint firstItem="LDs-6l-SaI" firstAttribute="top" secondItem="IVb-Ma-laL" secondAttribute="bottom" constant="12" id="JQD-g2-j4R"/>
                                 <constraint firstAttribute="height" constant="750" id="LCF-wb-QK4"/>
+                                <constraint firstItem="rtE-Hy-mOa" firstAttribute="top" secondItem="3Ia-yt-mt4" secondAttribute="top" constant="7" id="MX1-If-W7i"/>
                                 <constraint firstItem="LDs-6l-SaI" firstAttribute="leading" secondItem="nNY-vF-dHT" secondAttribute="leading" constant="24" id="MoC-TF-z7p"/>
                                 <constraint firstItem="IJf-Lj-Jbj" firstAttribute="width" secondItem="051-Z1-XBh" secondAttribute="width" id="OV0-cA-vyG"/>
                                 <constraint firstItem="IVb-Ma-laL" firstAttribute="leading" secondItem="nNY-vF-dHT" secondAttribute="leading" constant="24" id="Q1g-Km-h6e"/>
                                 <constraint firstItem="IJf-Lj-Jbj" firstAttribute="leading" secondItem="051-Z1-XBh" secondAttribute="leading" id="Qit-Ku-QNf"/>
-                                <constraint firstAttribute="trailing" secondItem="VyD-YU-Xch" secondAttribute="trailing" constant="24" id="TH0-dw-qD5"/>
                                 <constraint firstItem="3jD-qm-Eff" firstAttribute="top" secondItem="oY6-rv-BVb" secondAttribute="top" constant="7" id="VKQ-yC-T5U"/>
                                 <constraint firstItem="MY3-dc-Re1" firstAttribute="leading" secondItem="nNY-vF-dHT" secondAttribute="leading" constant="24" id="Xq9-pI-QEG"/>
                                 <constraint firstItem="k1u-BO-Y1r" firstAttribute="leading" secondItem="nNY-vF-dHT" secondAttribute="leading" constant="24" id="aBA-98-Ca1"/>
@@ -275,10 +286,11 @@
                                 <constraint firstItem="051-Z1-XBh" firstAttribute="leading" secondItem="nNY-vF-dHT" secondAttribute="leading" constant="24" id="ar9-RP-1Gj"/>
                                 <constraint firstItem="5qN-9M-gLf" firstAttribute="leading" secondItem="nNY-vF-dHT" secondAttribute="leading" constant="24" id="bSe-3S-s0v"/>
                                 <constraint firstAttribute="trailing" secondItem="v05-fJ-iDa" secondAttribute="trailing" constant="24" id="bq6-ME-Oti"/>
-                                <constraint firstItem="VyD-YU-Xch" firstAttribute="leading" secondItem="nNY-vF-dHT" secondAttribute="leading" constant="24" id="d9J-fr-xdQ"/>
                                 <constraint firstItem="OOM-ci-ZeT" firstAttribute="leading" secondItem="nNY-vF-dHT" secondAttribute="leading" constant="24" id="dJB-AP-9q6"/>
                                 <constraint firstItem="QbV-WY-0Xz" firstAttribute="top" secondItem="82z-kA-A3K" secondAttribute="top" constant="8" id="dus-Pl-8PM"/>
+                                <constraint firstItem="3Ia-yt-mt4" firstAttribute="trailing" secondItem="k1u-BO-Y1r" secondAttribute="trailing" id="hnz-Xj-oXg"/>
                                 <constraint firstItem="avw-ak-Jeq" firstAttribute="trailing" secondItem="gQW-Xm-NYL" secondAttribute="trailing" constant="12" id="k51-PM-abJ"/>
+                                <constraint firstItem="3Ia-yt-mt4" firstAttribute="leading" secondItem="rtE-Hy-mOa" secondAttribute="leading" constant="-10" id="kug-ge-wBu"/>
                                 <constraint firstItem="051-Z1-XBh" firstAttribute="top" secondItem="5qN-9M-gLf" secondAttribute="bottom" constant="5" id="l0U-ZK-aB0"/>
                                 <constraint firstItem="OOM-ci-ZeT" firstAttribute="top" secondItem="v05-fJ-iDa" secondAttribute="bottom" constant="21" id="nW3-Iv-Rhx"/>
                                 <constraint firstItem="v05-fJ-iDa" firstAttribute="top" secondItem="Kb3-ni-pgU" secondAttribute="bottom" constant="5" id="nYh-it-Wm2"/>
@@ -321,6 +333,12 @@
         <image name="ic_delete" width="18" height="19"/>
         <image name="ic_picture" width="80" height="82"/>
         <image name="ic_trash" width="20" height="22"/>
+        <namedColor name="Gray400">
+            <color red="0.72549019607843135" green="0.72549019607843135" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

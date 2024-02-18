@@ -8,8 +8,16 @@
 import UIKit
 
 final class ArtistPortfolioEditingViewController: UIViewController, UINavigationControllerDelegate {
-    var pastIndex: IndexPath?
-
+    let portfolioId: Int
+    init(receivedData: Int) {
+        self.portfolioId = receivedData
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    private var portfolioDetailData: PortfolioDetailData!
+    @IBOutlet weak var scrollFrameView: UIView!
     @IBOutlet private var makeupCategoryCollectionView: UICollectionView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var imagePickerStackView: UIStackView!
@@ -26,11 +34,13 @@ final class ArtistPortfolioEditingViewController: UIViewController, UINavigation
     
     @IBOutlet private weak var makeupNameTextField: UITextField!
     @IBOutlet private weak var priceTextField: UITextField!
-    @IBOutlet private weak var infoTextField: UITextField!
-    
+    @IBOutlet private weak var infoTextViewPlaceHolderLabel: UILabel!
+    @IBOutlet private weak var infoTextView: UITextView!
     
     private var userId = 1
-    private var artistId = 3
+    private var artistId = 10
+    private var isBlock : Bool = false
+    
     private var selectedCategory: PortfolioCategories?
     
     private var buttonAt: Int = 0
@@ -56,40 +66,88 @@ final class ArtistPortfolioEditingViewController: UIViewController, UINavigation
     override func viewDidLoad() {
         super.viewDidLoad()
         if isEdit {
-            getPortfolio()
+            getPortfolioDetail()
         }
         configureSubviews()
         makeConstraints()
         collectionViewConfigure()
         uiSet()
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+            self.view.endEditing(true)
+            self.scrollFrameView.endEditing(true)
+       }
     
-    private func getPortfolio() {
-        // 민지님 코드
+    private func getPortfolioDetail() {
+        let getPortfolio = PortfolioManager.shared
+        getPortfolio.getPortfolioDetail(userId: userId, portfolioId: portfolioId) { result in
+            switch result {
+            case .success(let response):
+//                for i in 0 ... (response.data?.portfolioImgDtoList!.count)! {
+//                    self.imgViewList[i] = response.data?.portfolioImgDtoList[i].portfolioImgSrc
+//                }
+//                print(response.data?.portfolioId)
+                self.portfolioDetailData = response.data
+                self.selectedCategory = PortfolioCategories(rawValue: response.data!.category)
+                self.makeupCategoryCollectionView.reloadData()
+                self.makeupNameTextField.text = response.data?.makeupName
+                self.priceTextField.text = String(response.data!.price)
+                self.infoTextView.text = response.data?.info
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
-    private func createPortfolio() {
+    private func createPortfolio(completion: @escaping (Bool) -> Void) {
         let createPortfolio = PortfolioManager.shared
         createPortfolio.createPortfolio(
             artistId: artistId,
             category: selectedCategory!,
             makeup_name: makeupNameTextField.text!,
             price: Int(priceTextField.text!)!,
-            info: infoTextField.text!,
+            info: infoTextView.text!,
             portfolio_img_src: ["dsfjkfs","sdfjsdsdk"]
         ) { result in
             switch result {
             case .success(let data):
                 print(data.message)
-                portfolioIdArray.append(data.data)
+                completion(true)
             case .failure(let error):
                 print(error.localizedDescription)
+                completion(false)
             }
         }
     }
     
+    private func editPortfolio(completion: @escaping (Bool) -> Void) {
+        let editPortfolio = PortfolioManager.shared
+        print("수정 시작")
+        editPortfolio.editPortfolio(
+            artistId: artistId,
+            portfolioId: portfolioId,
+            category: selectedCategory!,
+            makeup_name: makeupNameTextField.text!,
+            price: Int(priceTextField.text!)!,
+            info: infoTextView.text,
+            isBlock: isBlock, 
+            portfolio_img_src: []) { result in
+                switch result {
+                case .success(let response):
+                    print("성공" + response.message)
+                    completion(true)
+                case .failure(let error):
+                    print("수정 실패" + error.localizedDescription)
+                    completion(false)
+                }
+            }
+    }
+    
     private func uiSet(){
         self.tabBarController?.tabBar.isHidden = true
+        infoTextView.layer.cornerRadius = 10
+        infoTextView.layer.borderWidth = 1
+        infoTextView.layer.borderColor = UIColor.gray200.cgColor
         priceTextField.keyboardType = .numberPad
         if isEdit {
             titleLabel.text = "포트폴리오 수정"
@@ -170,12 +228,14 @@ final class ArtistPortfolioEditingViewController: UIViewController, UINavigation
     @objc func editButtonDidTap(_ sender: UIButton) {
         print("hi")
         let okCreateAction = UIAlertAction(title: "예", style: .default) { [weak self] _ in
-                self?.createPortfolio()
+            self?.createPortfolio(completion: { result in
                 self?.navigationController?.popViewController(animated: true)
+            })
         }
         let okEditAction = UIAlertAction(title: "예", style: .default) { [weak self] _ in
-//                self?.editPortfolio()
-                self?.navigationController?.popViewController(animated: true)
+                self?.editPortfolio(completion: { result in
+                    self?.navigationController?.popViewController(animated: true)
+                })
         }
         
         let noAction = UIAlertAction(title: "아니오", style: .cancel, handler: nil)
@@ -195,9 +255,10 @@ final class ArtistPortfolioEditingViewController: UIViewController, UINavigation
         
         // HIG에 따라 Cancel이 왼쪽
         if isEdit{
-            alert.addAction(okCreateAction)
-        }else {
+            print()
             alert.addAction(okEditAction)
+        }else {
+            alert.addAction(okCreateAction)
         }
         alert.addAction(noAction)
         
@@ -208,7 +269,10 @@ final class ArtistPortfolioEditingViewController: UIViewController, UINavigation
         
         let alert = UIAlertController(title: "포트폴리오 삭제하기", message: "\n포트폴리오를 삭제하시겠습니까?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "예", style: .default) { [weak self] _ in
+                self?.isBlock = true
+            self?.editPortfolio(completion: { result in
                 self?.navigationController?.popViewController(animated: true)
+            })
             }
         let noAction = UIAlertAction(title: "아니오", style: .cancel, handler : nil )
         // HIG에 따라 Cancel이 왼쪽
@@ -261,12 +325,21 @@ final class ArtistPortfolioEditingViewController: UIViewController, UINavigation
 
 extension ArtistPortfolioEditingViewController : UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return portfolioDummies.count
+        return portfolioCategories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ArtistMakeupTagCollectionViewCell", for: indexPath) as? ArtistMakeupTagCollectionViewCell else { return UICollectionViewCell() }
-        cell.makeupTagLabel.text = portfolioDummies[indexPath.row].name
+        let tagName = portfolioCategories[indexPath.row].korName
+        cell.makeupTagLabel.text = tagName
+        
+        if let selectedCategory = selectedCategory {
+            if selectedCategory == portfolioCategories[indexPath.row] {
+                cell.selected()
+            } else {
+            }
+        } else {
+        }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -274,7 +347,7 @@ extension ArtistPortfolioEditingViewController : UICollectionViewDelegate, UICol
         if let selectedCell = collectionView.cellForItem(at: indexPath) as? ArtistMakeupTagCollectionViewCell {
             // 선택된 셀에 대한 작업 수행
             selectedCell.selected()
-            selectedCategory = portfolioDummies[indexPath.row].category
+            selectedCategory = portfolioCategories[indexPath.row]
         }
         
         // 나머지 indexPath에 대한 셀을 가져와서 작업 수행

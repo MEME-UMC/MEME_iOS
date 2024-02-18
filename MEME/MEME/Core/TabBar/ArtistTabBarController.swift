@@ -51,6 +51,8 @@ final class ArtistTabBarController: UITabBarController {
     
     private func setUI() {
         tabBar.backgroundColor = .white
-        tabBar.tintColor = .black
+        tabBar.tintColor = .mainBold
+        tabBar.shadowImage = UIImage()
+        tabBar.backgroundImage = UIImage()
     }
 }

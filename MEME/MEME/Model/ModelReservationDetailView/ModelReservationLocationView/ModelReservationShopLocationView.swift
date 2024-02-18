@@ -83,3 +83,9 @@ class ModelReservationShopLocationView: UIView {
         checkShopLocationLabel.font = font
     }
 }
+
+extension ModelReservationShopLocationView {
+    func configureModelReservationShopLocationView(with data: MakeupLocationData) {
+        shopLocationLabel.text = data.shopLocation
+    }
+}

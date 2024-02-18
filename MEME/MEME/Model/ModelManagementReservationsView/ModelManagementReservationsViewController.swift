@@ -8,8 +8,16 @@
 import UIKit
 import SnapKit
 
+struct ReservationSection {
+    let date: Date
+    var reservations: [ReservationData]
+}
+
 final class ModelManagementReservationsViewController: UIViewController {
     // MARK: - Properties
+    private var reservationSections: [ReservationSection] = []
+    private var collectionViewItems: [ReservationCollectionViewItem] = []
+    
     private var reservationCollectionView: UICollectionView!
     private let navigationBar = NavigationBarView()
     
@@ -21,6 +29,7 @@ final class ModelManagementReservationsViewController: UIViewController {
         navigationBar.delegate = self
         navigationBar.configure(title: "전체 예약 보기")
         
+        showModelReservations()
         setupReservationCollectionView()
         configureSubviews()
         makeConstraints()
@@ -48,6 +57,25 @@ final class ModelManagementReservationsViewController: UIViewController {
     }
     
     //MARK: -Helpers
+    enum ReservationCollectionViewItem {
+        case date(Date)
+        case reservation(ReservationData)
+    }
+    private var dateFormatter: DateFormatter {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            return formatter
+    }
+    
+    private func setupCollectionViewItems() {
+        collectionViewItems = reservationSections.flatMap { section -> [ReservationCollectionViewItem] in
+
+            var sectionItems: [ReservationCollectionViewItem] = [.date(section.date)]
+
+            sectionItems += section.reservations.map { .reservation($0) }
+            return sectionItems
+        }
+    }
     private func setupReservationCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -70,43 +98,47 @@ final class ModelManagementReservationsViewController: UIViewController {
 extension ModelManagementReservationsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     //섹션의 갯수
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 1
     }
 
     //cell의 갯수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return collectionViewItems.count
     }
     
     //cell의 생성
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if [0, 2, 5].contains(indexPath.row) {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ModelManagementReservationsDateCollectionViewCell.identifier, for: indexPath) as? ModelManagementReservationsDateCollectionViewCell else {
+        let item = collectionViewItems[indexPath.item]
+        switch item {
+        case .date(let date):
+            guard let dateCell = collectionView.dequeueReusableCell(withReuseIdentifier: ModelManagementReservationsDateCollectionViewCell.identifier, for: indexPath) as? ModelManagementReservationsDateCollectionViewCell else {
                 fatalError("셀 타입 캐스팅 실패...")
             }
-            return cell
-        } else  {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ModelReservationConfirmViewCell.identifier, for: indexPath) as? ModelReservationConfirmViewCell else {
-                fatalError("셀 타입 캐스팅 실패...")
-            }
-            cell.contentView.backgroundColor = .gray200
-            cell.modelReservationLabel.textColor = .black
-            cell.modelReservationMakeupNameLabel.textColor = .black
-            cell.modelReservationArtistNameLabel.textColor = .black
-            cell.modelReservationLocationLabel.textColor = .black
-            cell.modelReservationPriceLabel.textColor = .black
+            dateCell.configure(with: date)
+            return dateCell
             
-            return cell
+        case .reservation(let reservation):
+            guard let reservationCell = collectionView.dequeueReusableCell(withReuseIdentifier: ModelReservationConfirmViewCell.identifier, for: indexPath) as? ModelReservationConfirmViewCell else {
+                fatalError("셀 타입 캐스팅 실패...")
+            }
+            reservationCell.contentView.backgroundColor = .gray200
+            reservationCell.modelReservationLabel.textColor = .black
+            reservationCell.modelReservationMakeupNameLabel.textColor = .black
+            reservationCell.modelReservationArtistNameLabel.textColor = .black
+            reservationCell.modelReservationLocationLabel.textColor = .black
+            reservationCell.modelReservationPriceLabel.textColor = .black
+            reservationCell.configure(with: reservation)
+            return reservationCell
         }
     }
 }
 
 extension ModelManagementReservationsViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if [0, 2, 5].contains(indexPath.row) {
-            return CGSize(
-                width: collectionView.frame.width, height: 20)
-        } else  {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch collectionViewItems[indexPath.item] {
+        case .date:
+            return CGSize(width: collectionView.frame.width, height: 20)
+        case .reservation:
             return CGSize(width: collectionView.frame.width, height: 142)
         }
     }
@@ -124,5 +156,46 @@ extension ModelManagementReservationsViewController: BackButtonTappedDelegate  {
         if let navigationController = self.navigationController {
             navigationController.popViewController(animated: true)
         }
+    }
+}
+
+//MARK: -API 통신 메소드
+extension ModelManagementReservationsViewController {
+    func showModelReservations() {
+        ReservationManager.shared.getModelReservation(modelId: 6) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let reservationResponse):
+                    self?.groupReservationsByDate(reservationResponse.data ?? [])
+                    self?.reservationCollectionView.reloadData()
+                    print("모델 예약 정보 조회 성공: \(reservationResponse)")
+                    
+                case .failure(let error):
+                    print("모델 예약 정보 조회 실패: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    private var isoDateFormatter: ISO8601DateFormatter {
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            return formatter
+        }
+
+    private func groupReservationsByDate(_ reservations: [ReservationData]) {
+        let groupedDictionary = Dictionary(grouping: reservations) { (reservationData) -> Date in
+            guard let date = isoDateFormatter.date(from: reservationData.reservationDate) else {
+                return Date()
+            }
+            
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            return Calendar.current.date(from: components) ?? date
+        }
+        
+        reservationSections = groupedDictionary.map { (key, value) in
+            ReservationSection(date: key, reservations: value)
+        }.sorted(by: { $0.date < $1.date })
+        
+        setupCollectionViewItems()
     }
 }

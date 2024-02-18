@@ -8,8 +8,13 @@
 import UIKit
 import SnapKit
 
+protocol ModelReservationVisitLocationViewDelegate: AnyObject {
+    func didEnterVisitLocation(_ location: String)
+}
+
 class ModelReservationVisitLocationView: UIView, UITextFieldDelegate {
     // MARK: - Properties
+    weak var delegate: ModelReservationVisitLocationViewDelegate?
     private var savedTextFieldValue: String?
     
     private var inputVisitLocationLabel: UILabel = {
@@ -29,7 +34,7 @@ class ModelReservationVisitLocationView: UIView, UITextFieldDelegate {
         
         return label
     }()
-    private var visitLocationTextField: UITextField = {
+    var visitLocationTextField: UITextField = {
         let textField = UITextField()
         let placeholderText = " 정확한 위치를 입력해주세요."
         textField.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray400])
@@ -105,5 +110,17 @@ class ModelReservationVisitLocationView: UIView, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == visitLocationTextField {
+            savedTextFieldValue = textField.text
+            delegate?.didEnterVisitLocation(textField.text ?? "")
+        }
+    }
     
+}
+
+extension ModelReservationVisitLocationView {
+    func configureModelReservationVisitLocationView(with data: MakeupLocationData) {
+        artistAvailabilityLocationLabel.text = "아티스트 방문 가능 지역: \(data.region)"
+    }
 }
