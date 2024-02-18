@@ -45,7 +45,7 @@ class ArtistHeaderView: UIView {
             let button = UIButton(type: .system)
             button.setImage(UIImage.userCheck, for: .normal)
             button.tintColor = UIColor.mainBold
-            button.addTarget(self, action: #selector(mpArtistClicked(sender:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(myProfileManageClicked(sender:)), for: .touchUpInside)
 
             return button
         }()
@@ -54,7 +54,7 @@ class ArtistHeaderView: UIView {
             let button = UIButton(type: .system)
             button.setImage(UIImage.bookOpen, for: .normal)
             button.tintColor = UIColor.mainBold
-            button.addTarget(self, action: #selector(mpMakeUpClicked(sender:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(myPortfolioClicked(sender:)), for: .touchUpInside)
 
             return button
         }()
@@ -63,14 +63,14 @@ class ArtistHeaderView: UIView {
             let button = UIButton(type: .system)
             button.setImage(UIImage.reserve, for: .normal)
             button.tintColor = UIColor.mainBold
-            button.addTarget(self, action: #selector(myReviewClicked(sender:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(myReservationManageClicked(sender:)), for: .touchUpInside)
 
             return button
         }()
 
         lazy var mpArtistlabel: UILabel = {
             let label = UILabel()
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mpArtistClicked(sender:)))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(myProfileManageClicked(sender:)))
             label.addGestureRecognizer(tapGesture)
             label.isUserInteractionEnabled = true
                 
@@ -79,7 +79,7 @@ class ArtistHeaderView: UIView {
         
         lazy var mpMakeuplabel: UILabel = {
             let label = UILabel()
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mpMakeUpClicked(sender:)))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(myPortfolioClicked(sender:)))
             label.addGestureRecognizer(tapGesture)
             label.isUserInteractionEnabled = true
                 
@@ -88,7 +88,7 @@ class ArtistHeaderView: UIView {
         
         lazy var mpReviewlabel: UILabel = {
             let label = UILabel()
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(myReviewClicked(sender:)))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(myReservationManageClicked(sender:)))
             label.addGestureRecognizer(tapGesture)
             label.isUserInteractionEnabled = true
                 
@@ -213,20 +213,20 @@ class ArtistHeaderView: UIView {
         delegate?.buttonClicked()
         }
         
-    @objc func mpArtistClicked(sender: UIView) {
-            delegate?.mpArtistClicked()
+    @objc func myProfileManageClicked(sender: UIView) {
+            delegate?.artistProfileManageClicked()
         }
-    @objc func mpMakeUpClicked(sender: UIView) {
-            delegate?.mpMakeUpClicked()
+    @objc func myPortfolioClicked(sender: UIView) {
+            delegate?.portfolioManageClicked()
         }
-    @objc func myReviewClicked(sender: UIView) {
-            delegate?.myReviewClicked()
+    @objc func myReservationManageClicked(sender: UIView) {
+            delegate?.artistReservationManageClicked()
         }
     }
 
 protocol ArtistHeaderViewDelegate: AnyObject {
     func buttonClicked()
-    func mpArtistClicked()
-    func mpMakeUpClicked()
-    func myReviewClicked()
+    func artistProfileManageClicked()
+    func portfolioManageClicked()
+    func artistReservationManageClicked()
 }

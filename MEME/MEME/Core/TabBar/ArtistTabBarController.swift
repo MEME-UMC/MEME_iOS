@@ -30,7 +30,7 @@ final class ArtistTabBarController: UITabBarController {
     private func setTabBarItems() {
         tabs = [
             TabBarItemType.artistHome: UINavigationController(rootViewController: ArtistHomeViewController()),
-            TabBarItemType.artistReservation: UINavigationController(rootViewController: ArtistReservationViewController()),
+            TabBarItemType.artistReservation: UINavigationController(rootViewController: ArtistReservationManageViewController()),
             TabBarItemType.artistMypage: UINavigationController(rootViewController: ArtistMyPageViewController())
         ]
         //

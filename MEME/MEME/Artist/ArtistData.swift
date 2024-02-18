@@ -22,9 +22,27 @@ var tomorrowRes : Int = 3
 
 //프로필 포트폴리오 구성요소
 var portfolioMakeupTagArray : [String] = ["데일리 메이크업1", "기본 메이크업2", "특수 메이크업3","데일리 메이크업1", "기본 메이크업2", "특수 메이크업3","데일리 메이크업1", "기본 메이크업2", "특수 메이크업3"]
-var makeupCategoryArray : [String] = ["데일리 메이크업","배우 메이크업","면접 메이크업","파티/이벤트 메이크업","웨딩 메이크업","특수 메이크업","스튜디오 메이크업","기타(속눈썹,퍼스널컬러)"]
+var portfolioDummies : [PortfolioCategoryData] =
+[
+    PortfolioCategoryData(name: "데일리 메이크업", category: .DAILY),
+    PortfolioCategoryData(name: "배우 메이크업", category: .ACTOR)
+]
 var portfolioMakeupNameArray : [String] = ["메이크업명1","메이크업명2","메이크업명3","메이크업명1","메이크업명2","메이크업명3","메이크업명1","메이크업명2","메이크업명3"]
 var portfolioPriceArray : [String] = ["가격1","가격2","가격3","가격1","가격2","가격3","가격1","가격2","가격3"]
 var portfolioImageArray : [String] = ["eximage","eximage","eximage","eximage","eximage","eximage","eximage","eximage","eximage"]
 var profilemakeupTagArray : [String] = ["데일리 메이크업","배우 메이크업","배우 메이크업","데일리 메이크업","배우 메이크업","배우 메이크업","데일리 메이크업","배우 메이크업","배우 메이크업"]
 
+struct ReservationData {
+    var resMakeupName: String
+    var resDate: String
+}
+
+struct PortfolioCategoryData {
+    let name: String
+    let category: PortfolioCategories
+}
+var portfolioIdx: Int = -1
+var portfolioIdArray: [Int] = []
+
+struct PortfolioComponent {
+}

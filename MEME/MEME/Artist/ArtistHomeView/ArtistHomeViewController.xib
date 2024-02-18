@@ -25,6 +25,8 @@
                 <outlet property="firstArtistResTimeLabel" destination="RbC-nP-PQW" id="B6e-Xo-Jos"/>
                 <outlet property="secondArtistHomeProfileStatusView" destination="aWM-zA-lPo" id="nWR-29-yhy"/>
                 <outlet property="secondArtistResBtn" destination="fHS-8K-ddk" id="g6s-rh-RdK"/>
+                <outlet property="secondArtistResLabel" destination="BbF-UB-5Bd" id="VEC-7N-S5Y"/>
+                <outlet property="secondArtistTimeLabel" destination="8nG-Gj-Aph" id="IzR-eZ-lGi"/>
                 <outlet property="view" destination="iN0-l3-epB" id="onH-gb-FdA"/>
             </connections>
         </placeholder>
@@ -133,12 +135,6 @@
                                 <constraint firstAttribute="height" constant="42" id="akh-RD-t2P"/>
                             </constraints>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7P8-Xz-33q" userLabel="NotificationBtn">
-                            <rect key="frame" x="317" y="55" width="49" height="34.333333333333343"/>
-                            <color key="tintColor" systemColor="systemOrangeColor"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="bell" catalog="system" title=""/>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1XR-PP-nYu" userLabel="ProfileImgBtn">
                             <rect key="frame" x="35" y="124.66666666666669" width="75" height="75"/>
                             <state key="normal" title="Button"/>
@@ -181,9 +177,7 @@
                         <constraint firstItem="OfX-ow-fEr" firstAttribute="leading" secondItem="nRp-5n-OCz" secondAttribute="leading" constant="25" id="FL1-VE-cOT"/>
                         <constraint firstItem="1XR-PP-nYu" firstAttribute="width" secondItem="ybc-3K-yic" secondAttribute="width" id="GeU-fH-4iq"/>
                         <constraint firstItem="Xfh-Hs-Rsa" firstAttribute="leading" secondItem="nRp-5n-OCz" secondAttribute="leading" constant="136" id="LDX-EA-FHi"/>
-                        <constraint firstAttribute="trailing" secondItem="7P8-Xz-33q" secondAttribute="trailing" constant="24" id="ScO-14-3CW"/>
                         <constraint firstItem="13u-bU-aOD" firstAttribute="top" secondItem="1XR-PP-nYu" secondAttribute="bottom" constant="5.3333333333333144" id="X8J-Kg-sXc"/>
-                        <constraint firstItem="7P8-Xz-33q" firstAttribute="top" secondItem="nRp-5n-OCz" secondAttribute="top" constant="55" id="Xk8-Ot-GiH"/>
                         <constraint firstItem="1XR-PP-nYu" firstAttribute="height" secondItem="ybc-3K-yic" secondAttribute="height" id="ZUy-8x-rdD"/>
                         <constraint firstItem="OfX-ow-fEr" firstAttribute="top" secondItem="nRp-5n-OCz" secondAttribute="top" constant="42" id="cTU-eT-GuZ"/>
                         <constraint firstAttribute="height" constant="320" id="iaY-Lw-gvj"/>
@@ -247,14 +241,13 @@
         </view>
     </objects>
     <resources>
-        <image name="bell" catalog="system" width="125" height="128"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="logo" width="161.66667175292969" height="100.66666412353516"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

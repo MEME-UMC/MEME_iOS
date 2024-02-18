@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ArtistPortfolioCollectionViewCell: UICollectionViewCell {
+final class ArtistPortfolioCollectionViewCell: UICollectionViewCell {
     @IBOutlet var portfolioImageView: UIImageView!
     @IBOutlet var portfolioSubLabel: UILabel!
     @IBOutlet var portfolioMainLabel: UILabel!

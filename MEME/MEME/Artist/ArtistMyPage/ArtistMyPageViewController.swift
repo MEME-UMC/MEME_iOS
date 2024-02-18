@@ -27,7 +27,7 @@ private let cellID = "Cell"
         // MARK: - Helpers
         
         func configureUI() {
-            
+            self.tabBarController?.tabBar.isHidden = false
             tableView.backgroundColor = .white
             
             view.addSubview(tableView)
@@ -177,18 +177,20 @@ extension ArtistMyPageViewController: UITableViewDelegate {
         self.navigationController?.pushViewController(myPageInfoViewController, animated: true)
     }
     //수정필요
-    func mpArtistClicked() {
-        let interestArtistViewController = InterestArtistViewController()
-        self.navigationController?.pushViewController(interestArtistViewController, animated: true)
+    func artistProfileManageClicked() {
+        // 프로필 수정
+        let vc = ModelViewArtistProfileViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func mpMakeUpClicked() {
-        let interestMakeUpViewController = InterestMakeUpViewController()
-        self.navigationController?.pushViewController(interestMakeUpViewController, animated: true)
+    func portfolioManageClicked() {
+        // 포트폴리오 관리
+        let vc = ArtistPortfolioManageViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
-    func myReviewClicked() {
-        let myReviewViewController = MyReviewViewController()
-        self.navigationController?.pushViewController(myReviewViewController, animated: true)
+    func artistReservationManageClicked() {
+        // 예약 관리
+        self.tabBarController?.selectedIndex = 1
     }
 }
 

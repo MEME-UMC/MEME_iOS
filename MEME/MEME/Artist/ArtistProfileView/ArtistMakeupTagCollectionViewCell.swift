@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ArtistMakeupTagCollectionViewCell: UICollectionViewCell {
+final class ArtistMakeupTagCollectionViewCell: UICollectionViewCell {
     @IBOutlet var makeupTagLabel: UILabel!
     @IBOutlet var makeupTagView: UIView!
     static let identifier = "ArtistMakeupTagCollectionViewCell"

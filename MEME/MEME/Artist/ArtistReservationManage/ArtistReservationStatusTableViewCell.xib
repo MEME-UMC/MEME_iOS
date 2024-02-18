@@ -67,13 +67,13 @@
                                 </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="예약" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xwB-SG-BAb" userLabel="reservationTimeTitle">
-                                <rect key="frame" x="286.66666666666669" y="15.333333333333336" width="31.333333333333314" height="21.666666666666671"/>
+                                <rect key="frame" x="286.66666666666669" y="15.333333333333337" width="31.333333333333314" height="21.666666666666671"/>
                                 <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2o6-Yd-ThJ" userLabel="reservationTimeLabel">
-                                <rect key="frame" x="234.99999999999997" y="15.333333333333336" width="47.666666666666657" height="21.666666666666671"/>
+                                <rect key="frame" x="234.99999999999997" y="15.333333333333337" width="47.666666666666657" height="21.666666666666671"/>
                                 <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -94,6 +94,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="336" height="142"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="reservationManageBtnTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bUi-lg-v4n"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" name="Gray200"/>

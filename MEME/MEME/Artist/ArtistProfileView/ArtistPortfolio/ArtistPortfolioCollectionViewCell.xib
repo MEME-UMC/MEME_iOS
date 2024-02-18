@@ -68,9 +68,10 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="Mou-Es-3WO" firstAttribute="centerY" secondItem="rTi-Ft-GxS" secondAttribute="centerY" id="Cva-8c-oym"/>
                                     <constraint firstAttribute="height" constant="218" id="l19-4r-DYy"/>
+                                    <constraint firstItem="Mou-Es-3WO" firstAttribute="leading" secondItem="rTi-Ft-GxS" secondAttribute="leading" constant="14" id="miV-jT-qov"/>
                                     <constraint firstItem="Mou-Es-3WO" firstAttribute="centerX" secondItem="rTi-Ft-GxS" secondAttribute="centerX" id="rAQ-wC-jCD"/>
+                                    <constraint firstItem="Mou-Es-3WO" firstAttribute="top" secondItem="rTi-Ft-GxS" secondAttribute="top" constant="13.666666666666671" id="tFA-sR-0Rb"/>
                                     <constraint firstAttribute="width" constant="150" id="yoQ-ic-hdO"/>
                                 </constraints>
                             </view>

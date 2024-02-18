@@ -8,11 +8,11 @@
 import UIKit
 
 class ArtistReservationManageViewController: UIViewController {
-    @IBOutlet var artistReservationTableView: UITableView!
-    @IBOutlet var onComingButton: UIButton!
-    @IBOutlet var completeButton: UIButton!
+    @IBOutlet private var artistReservationTableView: UITableView!
+    @IBOutlet private var onComingButton: UIButton!
+    @IBOutlet private var completeButton: UIButton!
     private var showOnComing : Bool = true
-    @IBOutlet var noReservationLabel: UIStackView!
+    @IBOutlet private var noReservationLabel: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +20,7 @@ class ArtistReservationManageViewController: UIViewController {
         uiSet()
     }
     private func uiSet(){
+        self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.isNavigationBarHidden = true
         noReservationLabel.isHidden = !resMakeUpNameArray.isEmpty
     }
@@ -32,14 +33,14 @@ class ArtistReservationManageViewController: UIViewController {
         let vc = SingleArtistReservationManageViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
-    @IBAction func onComingButtonTapped(_ sender: UIButton) {
+    @IBAction private func onComingButtonTapped(_ sender: UIButton) {
         showOnComing = true
-        onComingButton.setImage(UIImage(resource: .icCheckFill), for: .normal)
-        completeButton.setImage(UIImage(resource: .icCheckEmpty), for: .normal)
+        onComingButton.setImage(.icCheckFill, for: .normal)
+        completeButton.setImage(.icCheckEmpty, for: .normal)
         artistReservationTableView.reloadData()
     }
     
-    @IBAction func completeButtonTapped(_ sender: UIButton) {
+    @IBAction private func completeButtonTapped(_ sender: UIButton) {
         showOnComing = false
         completeButton.setImage(UIImage(resource: .icCheckFill), for: .normal)
         onComingButton.setImage(UIImage(resource: .icCheckEmpty), for: .normal)
@@ -59,7 +60,9 @@ extension ArtistReservationManageViewController : UITableViewDelegate, UITableVi
         cell.makeUpNameLabel.text = resMakeUpNameArray[indexPath.row]
         cell.modelNameLabel.text = resModelNameArray[indexPath.row]
         cell.reservationDateLabel.text = resDateArray[indexPath.row]
-        cell.reservationManageBtn.addTarget(self, action: #selector(reservationManagedBtnTapped), for: .touchUpInside)
+        if showOnComing {
+            cell.reservationManageBtn.addTarget(self, action: #selector(reservationManagedBtnTapped), for: .touchUpInside)
+        }
         if !onComingArray[indexPath.row]{
             cell.reservationTimeLabel.textColor = UIColor(resource: .gray500)
             cell.reservationPlaceIconImage.image = UIImage(resource: .icMapNotAvilable)

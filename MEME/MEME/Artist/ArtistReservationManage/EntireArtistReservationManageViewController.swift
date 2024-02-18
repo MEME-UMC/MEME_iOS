@@ -9,8 +9,8 @@ import UIKit
 
 class EntireArtistReservationManageViewController: UIViewController {
     
-    @IBOutlet var bottomBarView: UIView!
-    @IBOutlet var artistReservationTableView: UITableView!
+    @IBOutlet private var bottomBarView: UIView!
+    @IBOutlet private var artistReservationTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,7 @@ class EntireArtistReservationManageViewController: UIViewController {
     }
     
     private func tableViewConfigure(){
+        self.tabBarController?.tabBar.isHidden = true
         artistReservationTableView.delegate = self
         artistReservationTableView.dataSource = self
         artistReservationTableView.register(ArtistReservationStatusTableViewCell.nib(), forCellReuseIdentifier: ArtistReservationStatusTableViewCell.identifier)

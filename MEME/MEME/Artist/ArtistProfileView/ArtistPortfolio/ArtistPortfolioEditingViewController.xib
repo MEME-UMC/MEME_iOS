@@ -19,7 +19,10 @@
                 <outlet property="firstDeleteButton" destination="oY6-rv-BVb" id="84k-Ue-K0K"/>
                 <outlet property="firstImgView" destination="tf5-Gm-J7k" id="jvz-0V-9wb"/>
                 <outlet property="imagePickerStackView" destination="051-Z1-XBh" id="Qfp-h5-p27"/>
+                <outlet property="infoTextField" destination="VyD-YU-Xch" id="cOx-S0-4Th"/>
                 <outlet property="makeupCategoryCollectionView" destination="LDs-6l-SaI" id="HWZ-2c-Xwm"/>
+                <outlet property="makeupNameTextField" destination="v05-fJ-iDa" id="3dh-IW-lvN"/>
+                <outlet property="priceTextField" destination="k1u-BO-Y1r" id="5P8-eO-dSb"/>
                 <outlet property="secondDeleteButton" destination="82z-kA-A3K" id="3Po-HP-1pB"/>
                 <outlet property="secondImgView" destination="iVo-w9-NIz" id="8Qi-qk-Fq0"/>
                 <outlet property="thirdDeleteButton" destination="avw-ak-Jeq" id="mRy-Jd-gI7"/>

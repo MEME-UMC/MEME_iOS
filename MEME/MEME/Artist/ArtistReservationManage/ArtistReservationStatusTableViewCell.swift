@@ -7,8 +7,12 @@
 
 import UIKit
 
+protocol ArtistReservationCellDelegate : AnyObject {
+    func cellTapped()
+}
+
 class ArtistReservationStatusTableViewCell: UITableViewCell {
-    @IBOutlet var reservationFrameView: UIView!
+    @IBOutlet private var reservationFrameView: UIView!
     @IBOutlet var reservationDateLabel: UILabel!
     @IBOutlet var makeUpNameLabel: UILabel!
     @IBOutlet var modelNameLabel: UILabel!
@@ -19,6 +23,8 @@ class ArtistReservationStatusTableViewCell: UITableViewCell {
     
     static let identifier = "ArtistReservationStatusTableViewCell"
     
+    weak var delegate : ArtistReservationCellDelegate?
+
     static func nib() -> UINib {
         return UINib(nibName: "ArtistReservationStatusTableViewCell", bundle: nil)
     }
@@ -28,7 +34,10 @@ class ArtistReservationStatusTableViewCell: UITableViewCell {
         // Initialization code
         uiSet()
     }
-
+    @IBAction private func reservationManageBtnTapped(_ sender: UIButton) {
+        delegate?.cellTapped()
+    }
+    
     private func uiSet() {
         reservationFrameView.layer.cornerRadius = 10
         selectionStyle = .none
