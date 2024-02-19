@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: -아티스트 예약 조회 DTO
 // MARK: -모델 예약 조회 DTO
 struct ReservationDTO: Codable {
     let result: String

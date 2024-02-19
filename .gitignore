@@ -3,6 +3,7 @@
 memeSecret.*
 *.xcconfig
 .DS_Store
+GoogleService-Info.*
 Base-Info.plist
 ### Swift ###
 # Xcode

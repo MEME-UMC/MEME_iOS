@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol ArtistReservationCellDelegate : AnyObject {
-    func cellTapped()
-}
-
 class ArtistReservationStatusTableViewCell: UITableViewCell {
     @IBOutlet private var reservationFrameView: UIView!
     @IBOutlet var reservationDateLabel: UILabel!
@@ -19,11 +15,11 @@ class ArtistReservationStatusTableViewCell: UITableViewCell {
     @IBOutlet var reservationTimeLabel: UILabel!
     @IBOutlet var reservationPlaceIconImage: UIImageView!
     @IBOutlet var reservationPriceIconLabel: UILabel!
-    @IBOutlet var reservationManageBtn: UIButton!
+    @IBOutlet weak var reservationPriceLabel: UILabel!
+    @IBOutlet weak var reservationPlaceLabel: UILabel!
+    private var reservationData: ReservationData?
     
     static let identifier = "ArtistReservationStatusTableViewCell"
-    
-    weak var delegate : ArtistReservationCellDelegate?
 
     static func nib() -> UINib {
         return UINib(nibName: "ArtistReservationStatusTableViewCell", bundle: nil)
@@ -34,8 +30,17 @@ class ArtistReservationStatusTableViewCell: UITableViewCell {
         // Initialization code
         uiSet()
     }
+    
+    func configure(_ data: ReservationData) {
+        reservationData = data
+    }
+    
+    func getData() -> ReservationData? {
+        return reservationData
+    }
+    
     @IBAction private func reservationManageBtnTapped(_ sender: UIButton) {
-        delegate?.cellTapped()
+//        delegate?.cellTapped()
     }
     
     private func uiSet() {

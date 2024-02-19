@@ -26,6 +26,14 @@
                 <outlet property="cancelBarButton" destination="ZHC-bl-Cct" id="9fp-Lb-j6R"/>
                 <outlet property="cancelBarLabel" destination="2Om-41-ScY" id="3AG-ZJ-5GI"/>
                 <outlet property="cancelBarView" destination="Gyk-ma-98k" id="sIn-G6-Xfl"/>
+                <outlet property="makeupNameLabel" destination="dnu-ia-tMB" id="3Hg-ow-HHV"/>
+                <outlet property="makeupPlaceLabel" destination="dBD-fA-WoM" id="85X-zo-P2J"/>
+                <outlet property="makeupTimeLabel" destination="ZLA-Cf-KjS" id="9Sz-Xu-JLF"/>
+                <outlet property="modelGenderLabel" destination="fDw-cX-i9E" id="g3f-RQ-zeW"/>
+                <outlet property="modelNameLabel" destination="274-4Y-4iE" id="7S0-r0-dg3"/>
+                <outlet property="modelPersonalColorLabel" destination="wxw-2w-1u6" id="Nxf-si-QjH"/>
+                <outlet property="modelProfileImgView" destination="sYv-km-DBx" id="ydr-MT-rlJ"/>
+                <outlet property="modelSkinTypeLabel" destination="8eh-en-J1z" id="kRR-9P-klU"/>
                 <outlet property="resInfoFrameView" destination="AgI-kR-cB7" id="kA9-Fa-m9K"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -160,19 +168,19 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="fVn-OX-XhG">
                             <rect key="frame" x="14" y="19" width="154.33333333333334" height="82.333333333333329"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메이크업명" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dnu-ia-tMB" userLabel="makeUpNameLabel">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메이크업명" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dnu-ia-tMB" userLabel="makeupNameLabel">
                                     <rect key="frame" x="0.0" y="0.0" width="78" height="21.666666666666668"/>
                                     <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="18"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0월 0일 0요일 00:00시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZLA-Cf-KjS" userLabel="makeUpNameLabel">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0월 0일 0요일 00:00시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZLA-Cf-KjS" userLabel="makeupTimeLabel">
                                     <rect key="frame" x="0.0" y="32.666666666666629" width="154.33333333333334" height="19.333333333333329"/>
                                     <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
                                     <color key="textColor" name="MainBold"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="장소" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBD-fA-WoM" userLabel="makeUpNameLabel">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="장소" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBD-fA-WoM" userLabel="makeupPlaceLabel">
                                     <rect key="frame" x="0.0" y="63.000000000000007" width="27.666666666666668" height="19.333333333333336"/>
                                     <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
                                     <nil key="textColor"/>

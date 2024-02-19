@@ -29,10 +29,6 @@ class ArtistReservationManageViewController: UIViewController {
         artistReservationTableView.dataSource = self
         artistReservationTableView.register(ArtistReservationStatusTableViewCell.nib(), forCellReuseIdentifier: ArtistReservationStatusTableViewCell.identifier)
     }
-    @objc private func reservationManagedBtnTapped(){
-        let vc = SingleArtistReservationManageViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    }
     @IBAction private func onComingButtonTapped(_ sender: UIButton) {
         showOnComing = true
         onComingButton.setImage(.icCheckFill, for: .normal)
@@ -60,9 +56,6 @@ extension ArtistReservationManageViewController : UITableViewDelegate, UITableVi
         cell.makeUpNameLabel.text = resMakeUpNameArray[indexPath.row]
         cell.modelNameLabel.text = resModelNameArray[indexPath.row]
         cell.reservationDateLabel.text = resDateArray[indexPath.row]
-        if showOnComing {
-            cell.reservationManageBtn.addTarget(self, action: #selector(reservationManagedBtnTapped), for: .touchUpInside)
-        }
         if !onComingArray[indexPath.row]{
             cell.reservationTimeLabel.textColor = UIColor(resource: .gray500)
             cell.reservationPlaceIconImage.image = UIImage(resource: .icMapNotAvilable)
@@ -73,9 +66,16 @@ extension ArtistReservationManageViewController : UITableViewDelegate, UITableVi
         } else {
             return UITableViewCell()
         }
-
-
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ArtistReservationStatusTableViewCell.className, for: indexPath) as! ArtistReservationStatusTableViewCell
+        
+        let vc = SingleArtistReservationManageViewController(receivedData: cell.getData()!)
+        if cell.getData()?.status == "EXPECTED" {
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (showOnComing == onComingArray[indexPath.row]) ? CGFloat(192) : CGFloat(0)
     }

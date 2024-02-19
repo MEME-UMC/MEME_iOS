@@ -15,12 +15,7 @@ var onComingArray : [Bool] = [false,false,true]
 // 홈뷰컨 구성 요소
 // 예약 전적 유무
 var isReservation : Bool = true
-// 오늘 예약 수
-var TodayRes : Int = 0
-// 내일 예약 수
-var tomorrowRes : Int = 3
-
-//
+// 포트폴리오 카테고리
 var portfolioCategories = PortfolioCategories.allCases
 
 //프로필 포트폴리오 구성요소

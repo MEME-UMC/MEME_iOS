@@ -13,6 +13,8 @@ enum SecretInfoKeys {
     static let baseURL = "BaseURL"
     static let baseURLAuth = "BaseURLAuth"
     static let imageBaseURL = "ImageBaseURL"
+    static let s3Secret = "S3SecretKey"
+    static let s3Access = "S3AccessKey"
 }
 
 final class SecretInfoManager {
@@ -42,6 +44,16 @@ final class SecretInfoManager {
     class var imageBaseURL: String {
         guard let url = shared.info[SecretInfoKeys.imageBaseURL] else { fatalError("ImageBaseURL: Base-Info Plist error")}
         return url
+    }
+    
+    class var s3SecretKey: String {
+        guard let key = shared.info[SecretInfoKeys.s3Secret] else { fatalError("s3Secret: Base-Info Plist error")}
+        return key
+    }
+    
+    class var s3AccessKey: String {
+        guard let key = shared.info[SecretInfoKeys.s3Access] else { fatalError("s3Access: Base-Info Plist error")}
+        return key
     }
     
     private var info: [String: String] {

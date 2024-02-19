@@ -7,6 +7,9 @@
 
 import UIKit
 import PhotosUI
+import FirebaseStorage
+import Firebase
+import FirebaseAuth
 
 final class SetProfileViewController: UIViewController {
     
@@ -102,6 +105,12 @@ final class SetProfileViewController: UIViewController {
         nextButton.isEnabled = true
         nextButton.backgroundColor = .mainBold
     }
+    
+    
+    @IBAction func downImage(_ sender: Any) {
+        
+    }
+    
 }
 
 // MARK: - 사진 선택 설정
@@ -115,12 +124,17 @@ extension SetProfileViewController: PHPickerViewControllerDelegate {
         guard
             let itemProvider = results.first?.itemProvider,
             itemProvider.canLoadObject(ofClass: UIImage.self)
-        else { return }
+        else {
+            print("sdaa")
+            return }
         
-        itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+        itemProvider.loadObject(ofClass: UIImage.self) {[weak self] image, error in
             DispatchQueue.main.async {
                 guard let selectedImage = image as? UIImage else { return }
-                self.profileImageView.image = selectedImage
+                FirebaseStorageManager.uploadImage(image: selectedImage) { url in
+                    print(url)
+                }
+                self?.profileImageView.image = selectedImage
             }
         }
     }

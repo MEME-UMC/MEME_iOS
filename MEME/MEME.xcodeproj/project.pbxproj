@@ -28,6 +28,7 @@
 		095403D82B7D50E6003DF9AE /* PortfolioCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095403D72B7D50E6003DF9AE /* PortfolioCategories.swift */; };
 		095403DA2B7D51DA003DF9AE /* MakeupLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095403D92B7D51DA003DF9AE /* MakeupLocations.swift */; };
 		095403DC2B7D52B4003DF9AE /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095403DB2B7D52B4003DF9AE /* Regions.swift */; };
+		095403E32B81FE82003DF9AE /* memeSecret.plist in Resources */ = {isa = PBXBuildFile; fileRef = 095403E22B81FE82003DF9AE /* memeSecret.plist */; };
 		095742512B66153E0011B580 /* ArtistPortfolioEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957424F2B66153E0011B580 /* ArtistPortfolioEditingViewController.swift */; };
 		095742522B66153E0011B580 /* ArtistPortfolioEditingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 095742502B66153E0011B580 /* ArtistPortfolioEditingViewController.xib */; };
 		09A995192B77771A009A3F12 /* PortfolioAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A995182B77771A009A3F12 /* PortfolioAPI.swift */; };
@@ -62,13 +63,9 @@
 		2D6F59B52B5C475800CA883A /* ModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6F59B42B5C475800CA883A /* ModalPresentationController.swift */; };
 		2D6F59B82B5C4FB100CA883A /* SortOptionIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6F59B72B5C4FB100CA883A /* SortOptionIconView.swift */; };
 		2D6F59BF2B5C7D3300CA883A /* ModelReservationTypeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6F59BE2B5C7D3300CA883A /* ModelReservationTypeButton.swift */; };
-		2D7D747B2B76972D005BDFD5 /* memeSecret.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D7D74792B76972D005BDFD5 /* memeSecret.plist */; };
 		2D7D747E2B769C9E005BDFD5 /* ReservationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7D747D2B769C9E005BDFD5 /* ReservationDTO.swift */; };
 		2DA207F52B7A8D3D006EB9B9 /* MyPageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA207F42B7A8D3D006EB9B9 /* MyPageManager.swift */; };
 		2DA207F72B7A8D9D006EB9B9 /* MyPageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA207F62B7A8D9D006EB9B9 /* MyPageAPI.swift */; };
-		2DA207F92B7A8FE4006EB9B9 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA207F82B7A8FE4006EB9B9 /* Gender.swift */; };
-		2DA207FB2B7A9037006EB9B9 /* SkinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA207FA2B7A9037006EB9B9 /* SkinType.swift */; };
-		2DA207FD2B7A9069006EB9B9 /* PersonalColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA207FC2B7A9069006EB9B9 /* PersonalColor.swift */; };
 		2DA207FF2B7A9B05006EB9B9 /* MyPageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA207FE2B7A9B05006EB9B9 /* MyPageDTO.swift */; };
 		2DA208012B7AB514006EB9B9 /* SearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA208002B7AB514006EB9B9 /* SearchAPI.swift */; };
 		2DA208032B7AB577006EB9B9 /* SearchSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA208022B7AB577006EB9B9 /* SearchSort.swift */; };
@@ -135,6 +132,17 @@
 		315FB8662B6DE8900068163C /* MemeAPIAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 315FB8652B6DE8900068163C /* MemeAPIAuth.swift */; };
 		316239652B80DE58002D9E2F /* SignUpResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316239642B80DE58002D9E2F /* SignUpResponseDTO.swift */; };
 		316239672B80DE9B002D9E2F /* BasicResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316239662B80DE9B002D9E2F /* BasicResponseDTO.swift */; };
+		316239802B81B399002D9E2F /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3162397F2B81B399002D9E2F /* ImageManager.swift */; };
+		316239882B81C945002D9E2F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 316239872B81C945002D9E2F /* GoogleService-Info.plist */; };
+		3162398B2B81C9A8002D9E2F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3162398A2B81C9A8002D9E2F /* FirebaseAnalytics */; };
+		3162398D2B81C9A8002D9E2F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 3162398C2B81C9A8002D9E2F /* FirebaseAnalyticsOnDeviceConversion */; };
+		3162398F2B81C9A8002D9E2F /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3162398E2B81C9A8002D9E2F /* FirebaseAnalyticsSwift */; };
+		316239912B81C9A8002D9E2F /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 316239902B81C9A8002D9E2F /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		316239932B81C9A8002D9E2F /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 316239922B81C9A8002D9E2F /* FirebaseAppCheck */; };
+		316239962B81CF37002D9E2F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 316239952B81CF37002D9E2F /* FirebaseAuth */; };
+		316239982B81CF37002D9E2F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 316239972B81CF37002D9E2F /* FirebaseFirestore */; };
+		3162399A2B81CF37002D9E2F /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 316239992B81CF37002D9E2F /* FirebaseFirestoreSwift */; };
+		3162399C2B81CF37002D9E2F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3162399B2B81CF37002D9E2F /* FirebaseStorage */; };
 		316A926A2B66703800E4337D /* SetBusinessLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316A92682B66703800E4337D /* SetBusinessLocationViewController.swift */; };
 		316A926B2B66703800E4337D /* SetBusinessLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 316A92692B66703800E4337D /* SetBusinessLocationViewController.xib */; };
 		316A926D2B66705B00E4337D /* BusinessLocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316A926C2B66705B00E4337D /* BusinessLocationCollectionViewCell.swift */; };
@@ -243,6 +251,7 @@
 		095403D72B7D50E6003DF9AE /* PortfolioCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCategories.swift; sourceTree = "<group>"; };
 		095403D92B7D51DA003DF9AE /* MakeupLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupLocations.swift; sourceTree = "<group>"; };
 		095403DB2B7D52B4003DF9AE /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
+		095403E22B81FE82003DF9AE /* memeSecret.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = memeSecret.plist; sourceTree = "<group>"; };
 		0957424F2B66153E0011B580 /* ArtistPortfolioEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistPortfolioEditingViewController.swift; sourceTree = "<group>"; };
 		095742502B66153E0011B580 /* ArtistPortfolioEditingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtistPortfolioEditingViewController.xib; sourceTree = "<group>"; };
 		09A995182B77771A009A3F12 /* PortfolioAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioAPI.swift; sourceTree = "<group>"; };
@@ -277,7 +286,6 @@
 		2D6F59B42B5C475800CA883A /* ModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentationController.swift; sourceTree = "<group>"; };
 		2D6F59B72B5C4FB100CA883A /* SortOptionIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOptionIconView.swift; sourceTree = "<group>"; };
 		2D6F59BE2B5C7D3300CA883A /* ModelReservationTypeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelReservationTypeButton.swift; sourceTree = "<group>"; };
-		2D7D74792B76972D005BDFD5 /* memeSecret.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = memeSecret.plist; sourceTree = "<group>"; };
 		2D7D747D2B769C9E005BDFD5 /* ReservationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDTO.swift; sourceTree = "<group>"; };
 		2DA207F42B7A8D3D006EB9B9 /* MyPageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageManager.swift; sourceTree = "<group>"; };
 		2DA207F62B7A8D9D006EB9B9 /* MyPageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAPI.swift; sourceTree = "<group>"; };
@@ -348,6 +356,8 @@
 		315FB8652B6DE8900068163C /* MemeAPIAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeAPIAuth.swift; sourceTree = "<group>"; };
 		316239642B80DE58002D9E2F /* SignUpResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpResponseDTO.swift; sourceTree = "<group>"; };
 		316239662B80DE9B002D9E2F /* BasicResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicResponseDTO.swift; sourceTree = "<group>"; };
+		3162397F2B81B399002D9E2F /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		316239872B81C945002D9E2F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		316A92682B66703800E4337D /* SetBusinessLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBusinessLocationViewController.swift; sourceTree = "<group>"; };
 		316A92692B66703800E4337D /* SetBusinessLocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetBusinessLocationViewController.xib; sourceTree = "<group>"; };
 		316A926C2B66705B00E4337D /* BusinessLocationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessLocationCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -436,12 +446,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3162398F2B81C9A8002D9E2F /* FirebaseAnalyticsSwift in Frameworks */,
+				316239982B81CF37002D9E2F /* FirebaseFirestore in Frameworks */,
+				316239912B81C9A8002D9E2F /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				3162399A2B81CF37002D9E2F /* FirebaseFirestoreSwift in Frameworks */,
+				3162398B2B81C9A8002D9E2F /* FirebaseAnalytics in Frameworks */,
 				3142B98A2B4D019B0066CD5A /* SnapKit in Frameworks */,
 				3142B9932B4D01DF0066CD5A /* KakaoSDK in Frameworks */,
 				3142B98D2B4D01A90066CD5A /* FSCalendar in Frameworks */,
+				3162399C2B81CF37002D9E2F /* FirebaseStorage in Frameworks */,
 				3142B9902B4D01C40066CD5A /* Moya in Frameworks */,
+				316239962B81CF37002D9E2F /* FirebaseAuth in Frameworks */,
 				3142B9972B4D01DF0066CD5A /* KakaoSDKCommon in Frameworks */,
 				3142B9952B4D01DF0066CD5A /* KakaoSDKAuth in Frameworks */,
+				3162398D2B81C9A8002D9E2F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				316239932B81C9A8002D9E2F /* FirebaseAppCheck in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,6 +735,7 @@
 				3142B9782B4CFFEE0066CD5A /* MEMEUITests */,
 				3142B9562B4CFFED0066CD5A /* Products */,
 				31B2633E2B57ED1D00304FBE /* Recovered References */,
+				316239942B81CF37002D9E2F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -739,8 +759,9 @@
 				3142B9612B4CFFED0066CD5A /* Assets.xcassets */,
 				314F74E92B52DDF200CACF20 /* Font */,
 				3142B9662B4CFFED0066CD5A /* Info.plist */,
+				095403E22B81FE82003DF9AE /* memeSecret.plist */,
+				316239872B81C945002D9E2F /* GoogleService-Info.plist */,
 				2DCB3CCD2B7E041600BFCDA1 /* config.xcconfig */,
-				2D7D74792B76972D005BDFD5 /* memeSecret.plist */,
 				3142B9632B4CFFED0066CD5A /* LaunchScreen.storyboard */,
 				3156D1FD2B69438800559820 /* Network */,
 				3142B9992B4D01FB0066CD5A /* extenstions */,
@@ -788,6 +809,7 @@
 				31F6F8452B52C7A500EC621D /* NavigationBarView.xib */,
 				31F6F8472B52C7B800EC621D /* NavigationBarView.swift */,
 				3142B9B22B4D086B0066CD5A /* TabBar */,
+				3162397F2B81B399002D9E2F /* ImageManager.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -984,6 +1006,13 @@
 				315FB8612B6DE5F40068163C /* SecretInfoManager.swift */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		316239942B81CF37002D9E2F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		316A92672B66701900E4337D /* SetBusinessLocation */ = {
@@ -1242,6 +1271,15 @@
 				3142B9922B4D01DF0066CD5A /* KakaoSDK */,
 				3142B9942B4D01DF0066CD5A /* KakaoSDKAuth */,
 				3142B9962B4D01DF0066CD5A /* KakaoSDKCommon */,
+				3162398A2B81C9A8002D9E2F /* FirebaseAnalytics */,
+				3162398C2B81C9A8002D9E2F /* FirebaseAnalyticsOnDeviceConversion */,
+				3162398E2B81C9A8002D9E2F /* FirebaseAnalyticsSwift */,
+				316239902B81C9A8002D9E2F /* FirebaseAnalyticsWithoutAdIdSupport */,
+				316239922B81C9A8002D9E2F /* FirebaseAppCheck */,
+				316239952B81CF37002D9E2F /* FirebaseAuth */,
+				316239972B81CF37002D9E2F /* FirebaseFirestore */,
+				316239992B81CF37002D9E2F /* FirebaseFirestoreSwift */,
+				3162399B2B81CF37002D9E2F /* FirebaseStorage */,
 			);
 			productName = MEME;
 			productReference = 3142B9552B4CFFED0066CD5A /* MEME.app */;
@@ -1291,7 +1329,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					3142B9542B4CFFED0066CD5A = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -1320,6 +1358,7 @@
 				3142B98B2B4D01A90066CD5A /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				3142B98E2B4D01C40066CD5A /* XCRemoteSwiftPackageReference "Moya" */,
 				3142B9912B4D01DF0066CD5A /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 3142B9562B4CFFED0066CD5A /* Products */;
 			projectDirPath = "";
@@ -1359,32 +1398,29 @@
 				312B30522B550FF9008D17FC /* Pretendard-Thin.otf in Resources */,
 				31B263532B57EE8600304FBE /* SetDetailInfoViewController.xib in Resources */,
 				31C85EF62B526D200064A6E7 /* OnBoardingViewController.xib in Resources */,
-				3142B9652B4CFFED0066CD5A /* LaunchScreen.storyboard in Resources */,
 				2D0A19052B4ED07B00C1CECA /* SelectMakeupCardViewCell.xib in Resources */,
 				316A926B2B66703800E4337D /* SetBusinessLocationViewController.xib in Resources */,
 				316A92782B667E7200E4337D /* SetBusinessInfoDetailViewController.xib in Resources */,
 				2D62E25C2B54A658004E8299 /* RecentSearchViewCell.xib in Resources */,
-				3142B9622B4CFFED0066CD5A /* Assets.xcassets in Resources */,
+				316239882B81C945002D9E2F /* GoogleService-Info.plist in Resources */,
 				2D0A190A2B4EEDB500C1CECA /* CategorySearchViewCell.xib in Resources */,
 				2DCB3CCF2B7E041600BFCDA1 /* config.xcconfig in Resources */,
-				2D7D747B2B76972D005BDFD5 /* memeSecret.plist in Resources */,
 				2D0A19012B4EC9A000C1CECA /* ModelReservationConfirmViewCell.xib in Resources */,
 				2D6F59AC2B5BD07500CA883A /* ModelReservationChartTableViewCell.xib in Resources */,
 				31B2634B2B57EE7100304FBE /* RoleSelectionViewController.xib in Resources */,
 				315EE2D12B66566A0042A082 /* DetailSettingView.xib in Resources */,
 				312B304E2B550FF9008D17FC /* Pretendard-Medium.otf in Resources */,
 				091CCCDB2B64158B00ADD21C /* ArtistPortfolioManageViewController.xib in Resources */,
-				3142B9622B4CFFED0066CD5A /* Assets.xcassets in Resources */,
 				31B263502B57EE7D00304FBE /* SetProfileViewController.xib in Resources */,
 				31B263572B57EE9500304FBE /* RegistrationCompletionViewController.xib in Resources */,
 				312B304C2B550FF9008D17FC /* Pretendard-Black.otf in Resources */,
 				312B30542B550FF9008D17FC /* Pretendard-Regular.otf in Resources */,
 				31F6F8462B52C7A500EC621D /* NavigationBarView.xib in Resources */,
 				31B263482B57EE4800304FBE /* LoginViewController.xib in Resources */,
+				095403E32B81FE82003DF9AE /* memeSecret.plist in Resources */,
 				312B30512B550FF9008D17FC /* Pretendard-SemiBold.otf in Resources */,
 				31B263442B57EDE300304FBE /* TermDetailViewController.xib in Resources */,
 				315EE2D62B6658B50042A082 /* SetBusinessInfoViewController.xib in Resources */,
-				2D6F59AC2B5BD07500CA883A /* ModelReservationChartTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1430,19 +1466,14 @@
 				31B2634F2B57EE7D00304FBE /* SetProfileViewController.swift in Sources */,
 				316A926A2B66703800E4337D /* SetBusinessLocationViewController.swift in Sources */,
 				2D6F59B32B5C397400CA883A /* SortOptionsViewController.swift in Sources */,
-				2DA207FB2B7A9037006EB9B9 /* SkinType.swift in Sources */,
 				315FB8662B6DE8900068163C /* MemeAPIAuth.swift in Sources */,
 				2D6F59B82B5C4FB100CA883A /* SortOptionIconView.swift in Sources */,
 				2D5C05A42B60433000EDC69F /* ModelReservationDetailViewController.swift in Sources */,
-				CC2F3AC72B54444E00508DA5 /* InfoTableViewCell.swift in Sources */,
 				CCAB5A5D2B6785D400067FA4 /* MyPageSegmentedControl.swift in Sources */,
 				CCAB5A5B2B6740CE00067FA4 /* AskViewController.swift in Sources */,
 				CCAB5A492B65861600067FA4 /* InterestMakeUpViewController.swift in Sources */,
 				3156D2012B69443000559820 /* HTTPHeaderFields.swift in Sources */,
-				31B2634F2B57EE7D00304FBE /* SetProfileViewController.swift in Sources */,
 				316239652B80DE58002D9E2F /* SignUpResponseDTO.swift in Sources */,
-				2D6F59B32B5C397400CA883A /* SortOptionsViewController.swift in Sources */,
-				2D6F59B82B5C4FB100CA883A /* SortOptionIconView.swift in Sources */,
 				3142B9A72B4D04CA0066CD5A /* LoginViewController.swift in Sources */,
 				31F6F8332B52AF8600EC621D /* OnboardingCollectionViewCell.swift in Sources */,
 				095403D62B7BDB8F003DF9AE /* PortfolioDTO.swift in Sources */,
@@ -1459,15 +1490,13 @@
 				2DA208092B7ABE43006EB9B9 /* SearchDTO.swift in Sources */,
 				2D106F472B7025DB00F3C253 /* ModelReservationVisitLocationView.swift in Sources */,
 				316A927C2B6688F700E4337D /* Week.swift in Sources */,
-				3142B9A42B4D03840066CD5A /* ModelTabBarController.swift in Sources */,
+				316239802B81B399002D9E2F /* ImageManager.swift in Sources */,
 				315AC1CC2B70FE76003FD1A1 /* DayOfWeek.swift in Sources */,
 				317D98792B7E16B5009BBB95 /* MakeUpLocation.swift in Sources */,
 				317D986A2B7DEDC5009BBB95 /* WorkExperience.swift in Sources */,
 				2D6F59B12B5BF92600CA883A /* ModelReservationTypeViewCell.swift in Sources */,
 				091CCCD72B639E4800ADD21C /* ArtistData.swift in Sources */,
-				CC2F3AC52B5436B800508DA5 /* InfoHeaderView.swift in Sources */,
 				31B4137C2B6D295900535BB1 /* BusinessIDVerificationManager.swift in Sources */,
-				2D6F59B12B5BF92600CA883A /* ModelReservationTypeViewCell.swift in Sources */,
 				2DA2080F2B7CB425006EB9B9 /* RecommendManager.swift in Sources */,
 				31B65E4D2B6E18BA00628C68 /* ReservationAPI.swift in Sources */,
 				095403DA2B7D51DA003DF9AE /* MakeupLocations.swift in Sources */,
@@ -1507,7 +1536,6 @@
 				317D98702B7E01F7009BBB95 /* Gender.swift in Sources */,
 				CCAB5A532B66CD9F00067FA4 /* MyReviewViewController.swift in Sources */,
 				315EE2D02B66566A0042A082 /* DetailSettingView.swift in Sources */,
-				2DA207F92B7A8FE4006EB9B9 /* Gender.swift in Sources */,
 				2DA208112B7CB476006EB9B9 /* RecommendDTO.swift in Sources */,
 				2D6F59BF2B5C7D3300CA883A /* ModelReservationTypeButton.swift in Sources */,
 				2D6E4CEE2B6221D800D7F919 /* ModelManagementReservationsDateCollectionViewCell.swift in Sources */,
@@ -1515,7 +1543,6 @@
 				31C85EED2B526B780064A6E7 /* OnBoardingViewController.swift in Sources */,
 				315FB8572B6DE1480068163C /* AuthManager.swift in Sources */,
 				2DA208052B7AB5F3006EB9B9 /* SearchCategory.swift in Sources */,
-				2D6F59BF2B5C7D3300CA883A /* ModelReservationTypeButton.swift in Sources */,
 				3142B99F2B4D02300066CD5A /* UIFont+.swift in Sources */,
 				094884D72B598E4800C233E0 /* EntireArtistReservationManageViewController.swift in Sources */,
 				3142B9A22B4D037C0066CD5A /* NavigationController.swift in Sources */,
@@ -1527,11 +1554,9 @@
 				CC2F3ABE2B514CDB00508DA5 /* ModelMyPageTableViewCell.swift in Sources */,
 				CCAB5A6B2B6E00A500067FA4 /* ArtistMyPageTableViewCell.swift in Sources */,
 				CC2F3ABC2B5143FF00508DA5 /* ModelMyPageViewController.swift in Sources */,
-				3142B9A22B4D037C0066CD5A /* NavigationController.swift in Sources */,
 				3156D2032B69446E00559820 /* NetworkError.swift in Sources */,
 				2D4B7C242B5F1026001E1B09 /* ShowReviewView.swift in Sources */,
 				2D4B7C202B5EFA38001E1B09 /* ModelReservationSegmentedControl.swift in Sources */,
-				3142B99D2B4D021A0066CD5A /* UIView+.swift in Sources */,
 				CCAB5A4D2B65938F00067FA4 /* InterestArtistCollectionViewCell.swift in Sources */,
 				CC2F3AC22B54361100508DA5 /* MyPageInfoViewController.swift in Sources */,
 				2DA208012B7AB514006EB9B9 /* SearchAPI.swift in Sources */,
@@ -1540,15 +1565,11 @@
 				2D4B7C292B5F294A001E1B09 /* ModelManagementReservationsViewController.swift in Sources */,
 				0922F53F2B7A096600952A64 /* PortfolioManager.swift in Sources */,
 				2DA2080B2B7AFC36006EB9B9 /* ModelSearchResultViewController.swift in Sources */,
-				CC2F3AC22B54361100508DA5 /* MyPageInfoViewController.swift in Sources */,
 				316239672B80DE9B002D9E2F /* BasicResponseDTO.swift in Sources */,
 				31B2636D2B57EECB00304FBE /* BusinessRegistrationViewController.swift in Sources */,
-				2DA207FD2B7A9069006EB9B9 /* PersonalColor.swift in Sources */,
 				31B4137E2B6D29C500535BB1 /* BusinessIDVerificationAPI.swift in Sources */,
 				31F6F8482B52C7B800EC621D /* NavigationBarView.swift in Sources */,
 				2D106F4C2B702B5100F3C253 /* ModelReservationBothLocationView.swift in Sources */,
-				3142B9A22B4D037C0066CD5A /* NavigationController.swift in Sources */,
-				3142B99D2B4D021A0066CD5A /* UIView+.swift in Sources */,
 				31B413862B6D338F00535BB1 /* BusinessVerificationDTO.swift in Sources */,
 				315AC1C82B70FE35003FD1A1 /* ReservationTimes.swift in Sources */,
 				31B263582B57EE9500304FBE /* RegistrationCompletionViewController.swift in Sources */,
@@ -1561,7 +1582,6 @@
 				2D4B7C262B5F17E7001E1B09 /* TotalStarRatingView.swift in Sources */,
 				2D6F59AE2B5BF3A900CA883A /* ModelReservationChartTableViewController.swift in Sources */,
 				2DA207FF2B7A9B05006EB9B9 /* MyPageDTO.swift in Sources */,
-				094884DB2B59915500C233E0 /* SingleArtistReservationManageViewController.swift in Sources */,
 				094884DB2B59915500C233E0 /* SingleArtistReservationManageViewController.swift in Sources */,
 				3156D1FF2B69440E00559820 /* MemeAPI.swift in Sources */,
 				09275E892B528A610033EF34 /* ArtistReservationStatusTableViewCell.swift in Sources */,
@@ -1953,6 +1973,14 @@
 				minimumVersion = 2.20.0;
 			};
 		};
+		316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.21.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1985,6 +2013,51 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3142B9912B4D01DF0066CD5A /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKCommon;
+		};
+		3162398A2B81C9A8002D9E2F /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		3162398C2B81C9A8002D9E2F /* FirebaseAnalyticsOnDeviceConversion */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsOnDeviceConversion;
+		};
+		3162398E2B81C9A8002D9E2F /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		316239902B81C9A8002D9E2F /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		316239922B81C9A8002D9E2F /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
+		316239952B81CF37002D9E2F /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		316239972B81CF37002D9E2F /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		316239992B81CF37002D9E2F /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		3162399B2B81CF37002D9E2F /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 316239892B81C9A8002D9E2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -30,12 +30,13 @@ class EntireArtistReservationManageViewController: UIViewController {
         artistReservationTableView.register(ArtistReservationStatusTableViewCell.nib(), forCellReuseIdentifier: ArtistReservationStatusTableViewCell.identifier)
     }
     @IBAction private func backButtonDidTap(_ sender: UIButton) {
+        self.tabBarController?.tabBar.isHidden = false
         navigationController?.popViewController(animated: true)
     }
     
     @objc private func reservationManagedBtnTapped(){
-        let vc = SingleArtistReservationManageViewController()
-        navigationController?.pushViewController(vc, animated: true)
+//        let vc = SingleArtistReservationManageViewController()
+//        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -51,7 +52,6 @@ extension EntireArtistReservationManageViewController : UITableViewDelegate, UIT
         cell.makeUpNameLabel.text = resMakeUpNameArray[indexPath.row]
         cell.modelNameLabel.text = resModelNameArray[indexPath.row]
         cell.reservationDateLabel.text = resDateArray[indexPath.row]
-        cell.reservationManageBtn.addTarget(self, action: #selector(reservationManagedBtnTapped), for: .touchUpInside)
         return cell
 
     }

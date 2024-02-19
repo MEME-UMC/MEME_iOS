@@ -111,5 +111,23 @@ final class ReservationManager {
             }
         }
     }
+    func getArtistReservation(
+        artistId: Int,
+        completion: @escaping (Result<ReservationDTO, MoyaError>) -> Void
+    ) {
+        provider.request(api: .getArtistReservation(aristId: artistId)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let decodedData = try JSONDecoder().decode(ReservationDTO.self, from: response.data)
+                    completion(.success(decodedData))
+                } catch let error {
+                    completion(.failure(MoyaError.underlying(error, response)))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
     
 }

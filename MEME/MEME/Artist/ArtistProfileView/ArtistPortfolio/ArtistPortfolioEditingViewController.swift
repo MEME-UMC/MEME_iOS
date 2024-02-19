@@ -17,6 +17,7 @@ final class ArtistPortfolioEditingViewController: UIViewController, UINavigation
         fatalError("init(coder:) has not been implemented")
     }
     private var portfolioDetailData: PortfolioDetailData!
+    @IBOutlet weak var myScrollView: UIScrollView!
     @IBOutlet weak var scrollFrameView: UIView!
     @IBOutlet private var makeupCategoryCollectionView: UICollectionView!
     @IBOutlet private var titleLabel: UILabel!
@@ -72,14 +73,11 @@ final class ArtistPortfolioEditingViewController: UIViewController, UINavigation
         makeConstraints()
         collectionViewConfigure()
         uiSet()
+        setupDismissKeyboardOnTapGesture()
     }
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-            self.view.endEditing(true)
-            self.scrollFrameView.endEditing(true)
-       }
-    
     private func getPortfolioDetail() {
         let getPortfolio = PortfolioManager.shared
+        self.infoTextViewPlaceHolderLabel.isHidden = true
         getPortfolio.getPortfolioDetail(userId: userId, portfolioId: portfolioId) { result in
             switch result {
             case .success(let response):
@@ -122,7 +120,6 @@ final class ArtistPortfolioEditingViewController: UIViewController, UINavigation
     
     private func editPortfolio(completion: @escaping (Bool) -> Void) {
         let editPortfolio = PortfolioManager.shared
-        print("수정 시작")
         editPortfolio.editPortfolio(
             artistId: artistId,
             portfolioId: portfolioId,
@@ -424,4 +421,27 @@ extension ArtistPortfolioEditingViewController : UIImagePickerControllerDelegate
                 self.deleteButtonAppear()
             }
         }
+}
+
+extension ArtistPortfolioEditingViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+            // textview.text가 nil인지 빈 문자열인지 검사
+            if let text = textView.text, !text.isEmpty {
+                self.infoTextViewPlaceHolderLabel.isHidden = true
+            } else {
+                self.infoTextViewPlaceHolderLabel.isHidden = false
+            }
+        }
+}
+
+extension ArtistPortfolioEditingViewController {
+    func setupDismissKeyboardOnTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
