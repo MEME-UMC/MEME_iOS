@@ -17,13 +17,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let vc = getRootViewController()
-        
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = vc
-        window.makeKeyAndVisible()
-        
-        self.window = window
+        getRootViewController { rootViewController in
+            let window = UIWindow(windowScene: windowScene)
+            window.rootViewController = rootViewController
+            window.makeKeyAndVisible()
+            self.window = window
+        }
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -64,38 +63,40 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func getRootViewController() -> UIViewController {
+    func getRootViewController(completion: @escaping (UIViewController) -> Void) {
         let vc = NavigationController(nibName: nil, bundle: nil)
         vc.navigationBar.isHidden = true
-        // TODO: - 로그인 여부, 아티스트 여부에 따라 rootVC 설정 필요
-        var isLogin: Bool = UserDefaultManager.shared.getIsLogin() ?? false
-        
-        if isLogin == true {
-            let role = KeyChainManager.read(forkey: .role) ?? "ARTIST"
-            var isArtist: Bool = role == "ARTIST"
-            
-            if isArtist == true {
-                let mainVC = ArtistTabBarController(
-                    nibName: ArtistTabBarController.className,
-                    bundle: ArtistTabBarController.bundle
+        AuthManager.shared.reissue { result in
+            switch result {
+            case .success(let tokens):
+                KeyChainManager.save(forKey: .accessToken, value: tokens.accessToken)
+                KeyChainManager.save(forKey: .refreshToken, value: tokens.refreshToken)
+                
+                let role = KeyChainManager.read(forkey: .role) ?? RoleType.ARTIST.rawValue
+                if role == RoleType.ARTIST.rawValue {
+                    let mainVC = ArtistTabBarController(
+                        nibName: ArtistTabBarController.className,
+                        bundle: ArtistTabBarController.bundle
+                    )
+                    vc.viewControllers = [mainVC]
+                } else {
+                    let mainVC = ModelTabBarController(
+                        nibName: ModelTabBarController.className,
+                        bundle: ModelTabBarController.bundle
+                    )
+                    vc.viewControllers = [mainVC]
+                }
+                completion(vc)
+            case .failure(let error):
+                KeyChainManager.removeAllKeychain()
+                let loginVC = LoginViewController(
+                    nibName: LoginViewController.className,
+                    bundle: LoginViewController.bundle
                 )
-                vc.viewControllers = [mainVC]
-            } else {
-                let mainVC = ModelTabBarController(
-                    nibName: ModelTabBarController.className,
-                    bundle: ModelTabBarController.bundle
-                )
-                vc.viewControllers = [mainVC]
+                vc.viewControllers = [loginVC]
+                completion(vc)
             }
-        } else {
-            let loginVC = LoginViewController(
-                nibName: LoginViewController.className,
-                bundle: LoginViewController.bundle
-            )
-            vc.viewControllers = [loginVC]
         }
-    
-        return vc
     }
     
     func changeRootVC(_ vc:UIViewController, animated: Bool) {

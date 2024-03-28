@@ -330,29 +330,29 @@ extension ModelCancelReservationViewController {
         }
     }
     private func getRelatedPortfolio(userId: Int, portfolioId: Int) {
-        PortfolioManager.shared.getPortfolioDetail(userId: userId, portfolioId: portfolioId) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let portfolioDetail):
-                    if let jsonData = try? JSONEncoder().encode(portfolioDetail),
-                       let jsonString = String(data: jsonData, encoding: .utf8) {
-                        print("포트폴리오 세부 조회 완료: \(jsonString)")
-                        if let data = portfolioDetail.data {
-                            self?.portfolioData = [data]
-                            self?.relatedPortfolioCollectionView.reloadData()
-                        }
-                    } else {
-                        print("데이터 format 실패")
-                    }
-                    
-                case .failure(let error):
-                    if let responseData = error.response {
-                        let responseString = String(data: responseData.data, encoding: .utf8)
-                        print("포트폴리오 세부 조회 실패: \(responseString ?? "no data")")
-                    }
-                }
-            }
-        }
+//        PortfolioManager.shared.getPortfolioDetail(userId: userId, portfolioId: portfolioId) { [weak self] result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let portfolioDetail):
+//                    if let jsonData = try? JSONEncoder().encode(portfolioDetail),
+//                       let jsonString = String(data: jsonData, encoding: .utf8) {
+//                        print("포트폴리오 세부 조회 완료: \(jsonString)")
+//                        if let data = portfolioDetail.data {
+//                            self?.portfolioData = [data]
+//                            self?.relatedPortfolioCollectionView.reloadData()
+//                        }
+//                    } else {
+//                        print("데이터 format 실패")
+//                    }
+//                    
+//                case .failure(let error):
+//                    if let responseData = error.response {
+//                        let responseString = String(data: responseData.data, encoding: .utf8)
+//                        print("포트폴리오 세부 조회 실패: \(responseString ?? "no data")")
+//                    }
+//                }
+//            }
+//        }
     }
     private func patchReservation(reservationId: Int) {
         ReservationManager.shared.patchReservation(

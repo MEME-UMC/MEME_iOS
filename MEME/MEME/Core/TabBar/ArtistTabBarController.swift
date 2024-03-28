@@ -18,26 +18,14 @@ final class ArtistTabBarController: UITabBarController {
         setTabBarItems()
         setUI()
     }
-    
-//    private func setTabBarItems() {
-//        tabs = [
-////            TabBarItemType.artistHome: ArtistHomeViewController(),
-////            TabBarItemType.artistReservation: ArtistReservationViewController(),
-////            TabBarItemType.artistMypage: ArtistMyPageViewController()
-////            TabBarItemType.artistReservation: ArtistReservationManageViewController()//,
-//            TabBarItemType.artistMypage: ArtistMyPageViewController()
-//        ]
+
     private func setTabBarItems() {
         tabs = [
-            TabBarItemType.artistHome: UINavigationController(rootViewController: ArtistHomeViewController()),
-            TabBarItemType.artistReservation: UINavigationController(rootViewController: ManagementReservationsViewController()),
-            TabBarItemType.artistMypage: UINavigationController(rootViewController: ArtistMyPageViewController())
+            TabBarItemType.artistHome: ArtistHomeViewController(),
+            TabBarItemType.artistReservation: ManagementReservationsViewController(),
+            TabBarItemType.artistMypage: ArtistMyPageViewController()
         ]
-        //
-        
-        //        tabs.forEach { tabType, viewController in
-        //            viewController.tabBarItem = tabType.setTabBarItem()
-        //        }
+
         tabs.forEach { tabType, navigationController in
             navigationController.tabBarItem = tabType.setTabBarItem()
         }
@@ -45,8 +33,6 @@ final class ArtistTabBarController: UITabBarController {
         
         let tabViewControllers = sortedKeys.map { tabs[$0.key] ?? UIViewController() }
         setViewControllers(tabViewControllers, animated: false)
-        //            let tabViewControllers = sortedKeys.map { tabs[$0.key] ?? UINavigationController() }
-        //            setViewControllers(tabViewControllers, animated: false)
     }
     
     private func setUI() {

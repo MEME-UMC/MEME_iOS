@@ -10,73 +10,43 @@ import KakaoSDKUser
 import AuthenticationServices
 
 final class LoginViewController: UIViewController {
-    let userDefaultManager = UserDefaultManager.shared
+    private let userDefaultManager = UserDefaultManager.shared
+    private let authManager = AuthManager.shared
     
     override func viewDidLoad() {
-        print(KeyChainManager.read(forkey: .accessToken))
-        print(KeyChainManager.read(forkey: .refreshToken))
         super.viewDidLoad()
     }
     
     @IBAction private func kakaoLoginButtonTapped(_ sender: Any) {
-        //임시 이동 코드
-        kakaoLogin()
-    }
-    
-    
-    @IBAction private func appleLoginButtonTapped(_ sender: Any) {
-        appleLogin()
-    }
-}
-
-// MARK: - login 로직
-extension LoginViewController {
-    
-    private func kakaoLogin() {
-        if
-            let provider = userDefaultManager.getProvider(),
-            KeyChainManager.read(forkey: .role) != "",
-            KeyChainManager.read(forkey: .accessToken) != "",
-            provider == SocialProvider.KAKAO.rawValue
-        {
-            if KeyChainManager.read(forkey: .role) == "ARTIST" {
-                let nextVC = ArtistTabBarController()
-                navigationController?.pushViewController(nextVC, animated: true)
-            } else {
-                let nextVC = ModelTabBarController()
-                navigationController?.pushViewController(nextVC, animated: true)
-            }
-            
-            return
-        }
-        
-        userDefaultManager.saveProvider(SocialProvider.KAKAO.rawValue)
         if (UserApi.isKakaoTalkLoginAvailable()) {
-            UserApi.shared.loginWithKakaoTalk {[weak self](oauthToken, error) in
-                if let error = error {
-                    print("에러 발생",error)
-                } else {
-                    self?.userDefaultManager.saveIdToken(oauthToken!.idToken!)
-                    let nextVC = TermsAgreementViewController()
-                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(nextVC, animated: false)
+            UserApi.shared.loginWithKakaoTalk { [weak self] oauthToken, error in
+                guard
+                    error == nil,
+                    let self = self,
+                    let idToken = oauthToken?.idToken
+                else {
+                    print("카카오톡 로그인 에러 발생",error)
+                    return
                 }
+                
+                login(idToken: idToken, provider: .KAKAO)
             }
         } else {
-            UserApi.shared.loginWithKakaoAccount {[weak self](oauthToken, error) in
-                if let error = error {
-                    print(error)
-                } else {
-                    self?.userDefaultManager.saveIdToken(oauthToken!.idToken!)
-                    let nextVC = TermsAgreementViewController()
-                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(nextVC, animated: false)
-                    _ = oauthToken
+            UserApi.shared.loginWithKakaoAccount { [weak self] oauthToken, error  in
+                guard
+                    error == nil,
+                    let self = self,
+                    let idToken = oauthToken?.idToken
+                else {
+                    print("카카오톡 로그인 에러 발생",error)
+                    return
                 }
+                login(idToken: idToken, provider: .KAKAO)
             }
         }
     }
     
-    private func appleLogin() {
-        
+    @IBAction private func appleLoginButtonTapped(_ sender: Any) {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -88,40 +58,48 @@ extension LoginViewController {
     }
 }
 
-extension LoginViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        //회원 가입이 이미 되어있는 경우 야매 처리 코드
-        if
-            let provider = userDefaultManager.getProvider(),
-            let role = KeyChainManager.read(forkey: .role),
-            let key = KeyChainManager.read(forkey: .accessToken),
-            provider == SocialProvider.KAKAO.rawValue
-        {
-            if role == "ARTIST" {
-                
-                let nextVC = SetBusinessInfoViewController()
-                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(nextVC, animated: false)
-            } else {
-                let nextVC = ModelTabBarController()
-                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(nextVC, animated: false)
+// MARK: - login 로직
+extension LoginViewController {
+
+    private func login(idToken: String, provider: SocialProvider) {
+        print("===============디버깅 용 소셜 idToken, provider: \(provider.rawValue)===========")
+        print(idToken)
+        print("========id token 끝 ======================================================")
+        userDefaultManager.saveProvider(provider.rawValue)
+        userDefaultManager.saveIdToken(idToken)
+        
+        authManager.login(
+            idToken: idToken,
+            socialProvider: .KAKAO
+        ) { loginResult in
+            var baseVC: UIViewController
+            
+            switch loginResult {
+            case .success(let loginDTO):
+                // TODO: - 로그인 리스폰스 확정되면 수정 예정입니다! 일단 임시로 아티스트 홈으로 이동
+                baseVC = ArtistTabBarController()
+            case .failure(let error):
+                baseVC = TermsAgreementViewController()
             }
             
-            return
+            (UIApplication.shared
+                .connectedScenes
+                .first?
+                .delegate
+             as? SceneDelegate)?.changeRootVC(baseVC, animated: false)
         }
-        
-        userDefaultManager.saveProvider(SocialProvider.APPLE.rawValue)
-        let authManager = AuthManager.shared
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard
             let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
             let identityToken = credential.identityToken,
             let tokenString = String(data: identityToken, encoding: .utf8)
         else { return }
         
-        userDefaultManager.saveIdToken(tokenString)
-        
-        
-        let nextVC = TermsAgreementViewController()
-        navigationController?.pushViewController(nextVC, animated: true)
+        login(idToken: tokenString, provider: .APPLE)
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {

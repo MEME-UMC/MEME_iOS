@@ -136,15 +136,11 @@ struct KeyChainManager {
 extension KeyChainManager {
     
     static func removeAllKeychain() {
-        Self.delete(forKey: .accessToken)
-        Self.delete(forKey: .memberId)
-    }
-    
-    static func loadAccessToken() -> String {
-        "Bearer " + (Self.read(forkey: .accessToken) ?? "")
+        KeyChainValue.allCases.forEach { value in
+            Self.delete(forKey: value)
+        }
     }
 
-    
     static func loadMemberID() -> Int {
         var idString = Self.read(forkey: .memberId) ?? "-1"
         return Int(idString) ?? -1

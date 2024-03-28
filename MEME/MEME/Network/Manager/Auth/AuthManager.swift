@@ -122,11 +122,11 @@ final class AuthManager {
         }
     }
     
-    func reissue(
-        accessToken: String,
-        refreshToken: String,
-        completion: @escaping (Result<TokenResponseDTO, MoyaError>) -> Void
-    ) {
+    func reissue(completion: @escaping (Result<TokenResponseDTO, MoyaError>) -> Void) {
+        
+        let accessToken = KeyChainManager.read(forkey: .accessToken) ?? ""
+        let refreshToken = KeyChainManager.read(forkey: .refreshToken) ?? ""
+        
         provider.request(api: .reissue(
             accessToken: accessToken,
             refreshToken: refreshToken
@@ -134,10 +134,30 @@ final class AuthManager {
             switch result {
             case .success(let response):
                 do {
-                    let artists = try JSONDecoder().decode(TokenResponseDTO.self, from: response.data)
-                    completion(.success(artists))
+                    let tokens = try JSONDecoder().decode(TokenResponseDTO.self, from: response.data)
+                    completion(.success(tokens))
                 } catch let error {
                     print("Error decoding : \(error)")
+                    completion(.failure(MoyaError.jsonMapping(response)))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func login(
+        idToken: String,
+        socialProvider: SocialProvider,
+        completion: @escaping (Result<LoginDTO, MoyaError>) -> Void
+    ) {
+        provider.request(api: .login(idToken: idToken, provider: socialProvider)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let loginResult = try JSONDecoder().decode(LoginDTO.self, from: response.data)
+                    completion(.success(loginResult))
+                } catch let error {
                     completion(.failure(MoyaError.jsonMapping(response)))
                 }
             case .failure(let error):

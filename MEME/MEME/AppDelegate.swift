@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         let kakaoAppKey = SecretInfoManager.kakaoKey
         KakaoSDK.initSDK(appKey: kakaoAppKey)
-        // TODO: - kakao sdk init, font 등록
         return true
     }
 
